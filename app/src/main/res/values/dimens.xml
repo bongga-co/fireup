@@ -1,0 +1,16 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">0dp</dimen>
+    <dimen name="activity_vertical_margin">0dp</dimen>
+    <dimen name="list_places_space">10dp</dimen>
+    <dimen name="places_image_height">300dp</dimen>
+    <dimen name="place_icon_width">150dp</dimen>
+    <dimen name="place_icon_height">300dp</dimen>
+    <dimen name="pager_height">212dp</dimen>
+    <dimen name="map_place_height">150dp</dimen>
+    <dimen name="place_panel_height">74dp</dimen>
+    <dimen name="rating_icon_size">60dp</dimen>
+    <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="list_divider_height">1dp</dimen>
+    <dimen name="regular_space">16dp</dimen>
+</resources>

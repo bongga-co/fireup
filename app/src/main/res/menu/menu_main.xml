@@ -1,0 +1,38 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Main">
+
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/action_search"
+        android:icon="@drawable/ic_action_action_search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_map"
+        android:title="@string/action_places_map"
+        android:icon="@drawable/ic_action_maps_map"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_places_my_location"
+        android:title="@string/action_places_my_location"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_share"
+        android:title="@string/action_share"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_contact"
+        android:title="@string/action_contact"
+        app:showAsAction="never" />
+
+    <!--<item
+        android:id="@+id/action_logout"
+        android:title="@string/action_logout"
+        app:showAsAction="never" />-->
+
+</menu>

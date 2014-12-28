@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FireUp</string>
+
+    <!-- Activities -->
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_search">Search</string>
+    <string name="title_activity_detail">Detail</string>
+
+    <!-- Main Activity -->
+    <string name="action_places_map">Map</string>
+    <string name="action_search">Search</string>
+    <string name="action_share">Share FireUp</string>
+    <string name="action_contact">Contact Us</string>
+    <string name="action_logout">Close Session</string>
+    <string name="action_places_my_location">Nearby Places</string>
+    <string name="empty_data">Oops! Something went wrong or there are no nearby places.</string>
+    <string name="available_rooms"> available rooms</string>
+    <string name="error_get_places">Unable to get places.</string>
+
+    <!-- Map Activity -->
+
+    <!-- Search Activity -->
+    <string name="desc_search">Choose one or more search fields to get the information you want.</string>
+    <string name="sr_low_price">Low Price</string>
+    <string name="sr_high_price">High Price</string>
+    <string name="sr_text_city">City</string>
+    <string name="sr_text_rating">Rating</string>
+    <string name="sr_text_distance">Distance</string>
+    <string name="bt_text_search">Search</string>
+    <string name="first_city">Choose City</string>
+    <string-array name="cities">
+        <item>Bello</item>
+        <item>Copacabana</item>
+        <item>Envigado</item>
+        <item>Itagu\u00ed</item>
+        <item>La Estrella</item>
+        <item>Medell\u00edn</item>
+        <item>Sabaneta</item>
+    </string-array>
+
+    <!-- Detail Activity -->
+    <string name="error_place_detail_data">Unable to get place information.</string>
+
+    <!-- Place Categories -->
+    <string name="motel">Motel</string>
+    <string name="sexshop">Sex Shop</string>
+    <string name="gaybar">Gay Bar</string>
+    <string name="swingerbar">Swinger Bar</string>
+    <string name="massagecenter">Massage Center</string>
+
+    <!-- Globals -->
+    <string name="loader_message">Loading...</string>
+    <string name="error_network">No network connection, check your phone and try again.</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+</resources>

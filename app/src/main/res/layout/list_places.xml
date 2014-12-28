@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/list_places_space"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/icon_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/place_icon_height">
+
+        <ImageView
+            android:id="@+id/place_icon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/place_icon_height" />
+
+        <TextView
+            android:id="@+id/place_available_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/available_room"
+            android:layout_marginBottom="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:padding="3dp"
+            android:background="@color/background_room"/>
+
+        <LinearLayout
+            android:id="@+id/line_icon_wrapper"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/place_panel_height"
+        android:background="@drawable/list_places_shadow">
+
+        <LinearLayout
+            android:id="@+id/info_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/place_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:textColor="@color/place_name"/>
+
+            <TextView
+                android:id="@+id/place_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/place_category" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line_icon_inner_wrapper"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"/>
+
+        <TextView
+            android:id="@+id/place_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
