@@ -30,6 +30,8 @@
     <string name="sr_text_distance">Distance</string>
     <string name="bt_text_search">Search</string>
     <string name="first_city">Choose City</string>
+    <string name="action_reset">Reset Fields</string>
+
     <string-array name="cities">
         <item>Bello</item>
         <item>Copacabana</item>
