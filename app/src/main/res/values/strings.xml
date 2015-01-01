@@ -31,6 +31,8 @@
     <string name="bt_text_search">Search</string>
     <string name="first_city">Choose City</string>
     <string name="action_reset">Reset Fields</string>
+    <string name="error_search">Choose at least one search field</string>
+    <string name="error_search_exception">Unable to perform the search.</string>
 
     <string-array name="cities">
         <item>Bello</item>

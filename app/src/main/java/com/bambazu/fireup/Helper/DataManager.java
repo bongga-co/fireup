@@ -3,6 +3,7 @@ package com.bambazu.fireup.Helper;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -19,6 +20,9 @@ import java.util.List;
 import com.bambazu.fireup.Config.Config;
 import com.bambazu.fireup.R;
 import com.bambazu.fireup.Interfaz.DataListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by ubiquity on 9/19/14.
@@ -60,6 +64,26 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
 
             if(queryType.equals("List")){
                 query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), 3);
+            }
+            else{
+                JSONObject searchData = null;
+
+                try{
+                    searchData = new JSONObject((String) data[0].get("search"));
+
+                    if(searchData.getInt("rating") != 0){
+                        query.whereEqualTo("ranking", searchData.getInt("rating"));
+                    }
+
+                    if(searchData.getString("city") != null){
+                        query.whereEqualTo("city", searchData.getString("city"));
+                    }
+
+                    if(searchData.getInt("distance") != 0){
+                        query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), searchData.getInt("distance"));
+                    }
+                }
+                catch (JSONException e){}
             }
 
             query.findInBackground(new FindCallback<ParseObject>() {

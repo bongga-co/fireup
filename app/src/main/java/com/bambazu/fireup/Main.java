@@ -22,6 +22,9 @@ import com.bambazu.fireup.Interfaz.DataListener;
 import com.bambazu.fireup.Model.Place;
 import com.parse.ParseObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +68,7 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
         bestLocation = bestKnownLocation(MIN_LAST_READ_ACCURACY, FIVE_MIN);
 
         if(bestLocation != null){
-            getPlaces("List");
+            getPlaces("List", null);
         }
     }
 
@@ -118,7 +121,7 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
             return true;
         }
         else if(id == R.id.action_places_my_location){
-            getPlaces("List");
+            getPlaces("List", null);
         }
 
         return super.onOptionsItemSelected(item);
@@ -127,6 +130,13 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        String searchData = null;
+        if(requestCode == SEARCH_REQUEST && resultCode == RESULT_OK){
+            searchData = data.getStringExtra("searchResult");
+        }
+
+        getPlaces("Search", searchData);
     }
 
     @Override
@@ -136,7 +146,7 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
             Config.currentLongitude = location.getLongitude();
 
             bestLocation = location;
-            getPlaces("List");
+            getPlaces("List", null);
 
             if(bestLocation.getAccuracy() < MIN_ACCURACY){
                 locationManager.removeUpdates(this);
@@ -220,7 +230,7 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
         }
     }
 
-    private void getPlaces(String queryType){
+    private void getPlaces(String queryType, String data){
         queryData = null;
         dataManager = null;
 
@@ -228,6 +238,10 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
         queryData.put("class", "Places");
         queryData.put("objectId", null);
         queryData.put("queryType", queryType);
+
+        if(data != null){
+            queryData.put("search", data);
+        }
 
         if(!networkManager.isNetworkOnline()){
             Toast.makeText(this, getResources().getString(R.string.error_network), Toast.LENGTH_SHORT).show();

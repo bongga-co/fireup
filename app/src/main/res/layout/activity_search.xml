@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:numStars="5"
             android:stepSize="1.0"
-            android:isIndicator="true"
+            android:isIndicator="false"
             android:layout_gravity="center_horizontal"
             style="@style/heartRatingBar"/>
 
@@ -86,6 +86,11 @@
             android:layout_marginTop="20dp"
             android:text="@string/sr_text_distance" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <SeekBar
             android:id="@+id/sr_distance"
             android:layout_width="match_parent"
@@ -93,7 +98,22 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:max="10" />
+            android:max="10"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/sr_distance_value"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="-20dp"
+            android:layout_marginRight="20dp"
+            android:textSize="28sp"
+            android:text="0"
+            android:textColor="@color/distance_value"
+            android:layout_weight="1"/>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_search"

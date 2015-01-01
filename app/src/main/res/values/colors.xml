@@ -63,4 +63,6 @@
 
     <color name="btn_search">#ff4444</color>
     <color name="btn_search_title_color">#ffffff</color>
+
+    <color name="distance_value">#aa33aa77</color>
 </resources>
