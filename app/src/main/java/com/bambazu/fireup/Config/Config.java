@@ -1,10 +1,25 @@
 package com.bambazu.fireup.Config;
 
 import android.app.Application;
+
+import com.bambazu.fireup.Helper.DistanceManager;
 import com.bambazu.fireup.Model.Place;
 import com.bambazu.fireup.R;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by blackxcorpio on 26/12/2014.
@@ -12,6 +27,7 @@ import java.util.ArrayList;
 public class Config extends Application {
     public static double currentLatitude = 0.0;
     public static double currentLongitude = 0.0;
+    public static double distance = 0.0;
     public static final int MIN_TIME = 0;
     public static final int MIN_DISTANCE = 0;
     public static ArrayList<Place> currentPlaces;
@@ -45,13 +61,18 @@ public class Config extends Application {
     }
 
     public static double getDistance(double sourceLatitude, double sourceLongitude, double destinationLatitude, double destinationLongitude){
-        double theta = sourceLongitude - destinationLongitude;
+        /*double theta = Math.abs(sourceLongitude - destinationLongitude);
         double dist = Math.sin(deg2rad(sourceLatitude)) * Math.sin(deg2rad(destinationLatitude)) + Math.cos(deg2rad(sourceLatitude)) * Math.cos(deg2rad(destinationLatitude)) * Math.cos(deg2rad(theta));
         dist = Math.acos(dist);
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
 
-        return Math.round(dist * 100.0) / 100.0;
+        return Math.floor(dist * 100.0) / 100.0;*/
+
+        float [] dist = new float[1];
+        android.location.Location.distanceBetween(sourceLatitude, sourceLongitude, destinationLatitude, destinationLongitude, dist);
+
+        return Math.round(dist[0] * 0.000621371192f);
     }
 
     private static double deg2rad(double deg) {

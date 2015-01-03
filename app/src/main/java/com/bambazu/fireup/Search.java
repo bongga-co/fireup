@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -15,9 +16,6 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bambazu.fireup.Adapter.SpinnerAdapter;
-import com.bambazu.fireup.Model.SpinnerModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,8 +49,10 @@ public class Search extends ActionBarActivity {
         highPrice = (EditText) findViewById(R.id.sr_high_price);
         cityName = (Spinner) findViewById(R.id.sr_city);
 
-        setDataCities();
-        cityName.setAdapter(new SpinnerAdapter(this, R.layout.spinner_item, listCity));
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.cities, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cityName.setAdapter(adapter);
 
         ratingPlace = (RatingBar) findViewById(R.id.sr_rating);
         placeDistanceValue = (TextView) findViewById(R.id.sr_distance_value);
@@ -105,19 +105,11 @@ public class Search extends ActionBarActivity {
                     }
 
                     //City
-                    if(cityName.getSelectedItemPosition() != 0) {
-                        searchFields.put("city", cityName.getSelectedItem());
-                    }
-
+                    searchFields.put("city", cityName.getSelectedItem());
                     //Rating
-                    if(ratingPlace.getRating() != 0.0) {
-                        searchFields.put("rating", (int)ratingPlace.getRating());
-                    }
-
+                    searchFields.put("rating", (int)ratingPlace.getRating());
                     //Distance
-                    if(!placeDistanceValue.getText().toString().equals("0")){
-                        searchFields.put("distance", Integer.parseInt(placeDistanceValue.getText().toString()));
-                    }
+                    searchFields.put("distance", Integer.parseInt(placeDistanceValue.getText().toString()));
 
                     Intent intent = new Intent();
                     intent.putExtra("searchResult", searchFields.toString());
@@ -158,14 +150,5 @@ public class Search extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void setDataCities(){
-        String[] cityArray = getResources().getStringArray(R.array.cities);
-        listCity = new ArrayList();
-
-        for(int i=0; i<cityArray.length; i++){
-            listCity.add(new SpinnerModel(cityArray[i]));
-        }
     }
 }

@@ -7,6 +7,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +19,10 @@ import com.bambazu.fireup.Adapter.PlaceAdapter;
 import com.bambazu.fireup.Config.Config;
 import com.bambazu.fireup.Helper.DataManager;
 import com.bambazu.fireup.Helper.NetworkManager;
+import com.bambazu.fireup.Interfaz.CalculateDistanceListener;
 import com.bambazu.fireup.Interfaz.DataListener;
 import com.bambazu.fireup.Model.Place;
 import com.parse.ParseObject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,6 +52,7 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
 
     private DataManager dataManager;
     private NetworkManager networkManager;
+    private HashMap<String, Double> locationData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +121,7 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
             return true;
         }
         else if(id == R.id.action_places_my_location){
+            listPlaces.setAdapter(null);
             getPlaces("List", null);
         }
 

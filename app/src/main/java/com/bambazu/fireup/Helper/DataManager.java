@@ -71,17 +71,22 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
                 try{
                     searchData = new JSONObject((String) data[0].get("search"));
 
-                    if(searchData.getInt("rating") != 0){
-                        query.whereEqualTo("ranking", searchData.getInt("rating"));
+                    //Price
+
+                    if(!searchData.getString("city").equals("Choose City") || !searchData.getString("city").equals("Seleccione Ciudad")){
+                        query.whereEqualTo("city", searchData.getString("city"));
                     }
 
-                    if(searchData.getString("city") != null){
-                        query.whereEqualTo("city", searchData.getString("city"));
+
+                    Log.i("FireUp", String.valueOf(searchData.getInt("rating")));
+                    Log.i("FireUp", String.valueOf(searchData.getInt("distance")));
+                    /*if(searchData.getInt("rating") != 0){
+                        query.whereEqualTo("ranking", String.valueOf(searchData.getInt("rating")));
                     }
 
                     if(searchData.getInt("distance") != 0){
                         query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), searchData.getInt("distance"));
-                    }
+                    }*/
                 }
                 catch (JSONException e){}
             }

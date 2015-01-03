@@ -18,6 +18,7 @@
     <string name="empty_data">Oops! Something went wrong or there are no nearby places.</string>
     <string name="available_rooms"> available rooms</string>
     <string name="error_get_places">Unable to get places.</string>
+    <string name="error_get_location">Unable to get the device location.</string>
 
     <!-- Map Activity -->
 
@@ -35,6 +36,7 @@
     <string name="error_search_exception">Unable to perform the search.</string>
 
     <string-array name="cities">
+        <item>Choose City</item>
         <item>Bello</item>
         <item>Copacabana</item>
         <item>Envigado</item>
