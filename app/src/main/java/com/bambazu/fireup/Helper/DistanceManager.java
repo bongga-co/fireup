@@ -22,7 +22,7 @@ import java.util.HashMap;
 /**
  * Created by blackxcorpio on 02/01/2015.
  */
-public class DistanceManager extends AsyncTask<HashMap, Void, Double> {
+public class DistanceManager extends AsyncTask<HashMap, Void, String> {
     private StringBuilder stringBuilder;
     private double destinationLatitude;
     private double destinationLongitude;
@@ -31,7 +31,7 @@ public class DistanceManager extends AsyncTask<HashMap, Void, Double> {
     private CalculateDistanceListener calculateDistanceListener;
 
     @Override
-    protected Double doInBackground(HashMap... locationData) {
+    protected String doInBackground(HashMap... locationData) {
         stringBuilder = new StringBuilder();
 
         destinationLatitude = (Double) locationData[0].get("destinationLatitude");
@@ -67,14 +67,19 @@ public class DistanceManager extends AsyncTask<HashMap, Void, Double> {
                 JSONObject distance = steps.getJSONObject("distance");
 
                 dist = distance.getString("text");
-                calculateDistanceListener.calculateDistance(dist);
             }
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return dist;
+    }
+
+    @Override
+    protected void onPostExecute(String distance) {
+        super.onPostExecute(distance);
+        calculateDistanceListener.calculateDistance(dist);
     }
 
     public void setCalculateDistanceListener(CalculateDistanceListener calculateDistanceListener){

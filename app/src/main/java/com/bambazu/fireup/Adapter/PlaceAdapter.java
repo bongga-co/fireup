@@ -2,7 +2,6 @@ package com.bambazu.fireup.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,22 +9,19 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.bambazu.fireup.Config.Config;
-import com.bambazu.fireup.Helper.DistanceManager;
-import com.bambazu.fireup.Interfaz.CalculateDistanceListener;
 import com.bambazu.fireup.R;
 import com.bambazu.fireup.Model.Place;
 
 /**
  * Created by blackxcorpio on 10/15/14.
  */
-public class PlaceAdapter extends BaseAdapter implements CalculateDistanceListener {
+public class PlaceAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Place> listPlaces;
     private ViewHolder holder;
@@ -69,7 +65,7 @@ public class PlaceAdapter extends BaseAdapter implements CalculateDistanceListen
             holder.placeName = (TextView) convertView.findViewById(R.id.place_name);
             holder.placeCategory = (TextView) convertView.findViewById(R.id.place_category);
             holder.placeIcon = (ImageView) convertView.findViewById(R.id.place_icon);
-            holder.placeDistance = (TextView) convertView.findViewById(R.id.place_distance);
+            holder.placeRanking = (TextView) convertView.findViewById(R.id.place_ranking);
             holder.placeAvailableRoom = (TextView) convertView.findViewById(R.id.place_available_room);
             holder.lineWrapper = (LinearLayout) convertView.findViewById(R.id.line_icon_wrapper);
             holder.lineInnerWrapper = (LinearLayout) convertView.findViewById(R.id.line_icon_inner_wrapper);
@@ -86,18 +82,8 @@ public class PlaceAdapter extends BaseAdapter implements CalculateDistanceListen
         holder.lineWrapper.setBackgroundColor(context.getResources().getColor(Config.setPlaceColor(place.getPlaceCategory().toLowerCase())));
         holder.lineInnerWrapper.setBackgroundColor(context.getResources().getColor(Config.setPlaceColor(place.getPlaceCategory().toLowerCase())));
 
-        if(Config.currentLatitude != 0.0 && Config.currentLongitude != 0.0){
-            holder.placeDistance.setText(String.valueOf(Config.getDistance(Config.currentLatitude, Config.currentLongitude, place.getLatitude(), place.getLongitude())) + " Kms");
-        }
-        else{
-            holder.placeDistance.setText("--");
-        }
-
         if(place.getPlaceCategory().toLowerCase().equals("motel") && place.getRooms() > 0) {
             holder.placeAvailableRoom.setText(place.getRooms() + " " + context.getResources().getString(R.string.available_rooms));
-        }
-        else{
-            holder.placeAvailableRoom.setText("");
         }
 
         AQuery asyncLoader = imgLoader.recycle(convertView);
@@ -106,28 +92,11 @@ public class PlaceAdapter extends BaseAdapter implements CalculateDistanceListen
         return convertView;
     }
 
-    private void showDistance(double latitude, double longitude){
-        locationData = new HashMap<String, Double>();
-        locationData.put("destinationLatitude", latitude);
-        locationData.put("destinationLongitude", longitude);
-
-        DistanceManager distanceManager = new DistanceManager();
-        distanceManager.setCalculateDistanceListener(this);
-        distanceManager.execute(locationData);
-    }
-
-    @Override
-    public void calculateDistance(String distance) {
-        if(Config.currentLatitude == 0.0 && Config.currentLongitude == 0.0){
-            holder.placeDistance.setText(distance);
-        }
-    }
-
     static class ViewHolder {
         TextView placeName;
         TextView placeCategory;
         ImageView placeIcon;
-        TextView placeDistance;
+        TextView placeRanking;
         TextView placeAvailableRoom;
         LinearLayout lineWrapper;
         LinearLayout lineInnerWrapper;

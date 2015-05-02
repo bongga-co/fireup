@@ -1,12 +1,9 @@
 package com.bambazu.fireup;
 
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,18 +16,33 @@ import com.bambazu.fireup.Adapter.PlaceAdapter;
 import com.bambazu.fireup.Config.Config;
 import com.bambazu.fireup.Helper.DataManager;
 import com.bambazu.fireup.Helper.NetworkManager;
-import com.bambazu.fireup.Interfaz.CalculateDistanceListener;
 import com.bambazu.fireup.Interfaz.DataListener;
 import com.bambazu.fireup.Model.Place;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
-public class Main extends ActionBarActivity implements DataListener, LocationListener {
+public class Main extends ActionBarActivity implements DataListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+
+    private Location lastLocation;
+    private GoogleApiClient googleApiClient;
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
+    private boolean isRequestLocationUpdates = false;
+    private LocationRequest locationRequest;
+
+    private static int UPDATE_INTERVAL = 10000;
+    private static int FASTEST_INTERVAL = 5000;
+    private static int DISPLACEMENT = 10;
 
     private ListView listPlaces;
     private ArrayList<Place> places;
@@ -38,21 +50,8 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
 
     private HashMap<String, Object> queryData;
 
-    private LocationManager locationManager;
-    private Location bestLocation;
-
-    private static final long ONE_MIN = 60 * 1000;
-    private static final long TWO_MIN = ONE_MIN * 2;
-    private static final long FIVE_MIN = ONE_MIN * 5;
-    private static final long MEASURE_TIME = 1000 * 30;
-    private static final long POLLING_FREQ = 1000 * 10;
-    private static final float MIN_ACCURACY = 25.0f;
-    private static final float MIN_LAST_READ_ACCURACY = 500.0f;
-    private static final float MIN_DISTANCE = 10.0f;
-
     private DataManager dataManager;
     private NetworkManager networkManager;
-    private HashMap<String, Double> locationData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,40 +63,44 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
         listPlaces = (ListView) findViewById(R.id.listPlaces);
         listPlaces.setEmptyView(findViewById(android.R.id.empty));
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        bestLocation = bestKnownLocation(MIN_LAST_READ_ACCURACY, FIVE_MIN);
+        if(checkPlayServices()){
+            buildGoogleApiClient();
+            createLocationRequest();
+        }
+        else{
+            finish();
+        }
+    }
 
-        if(bestLocation != null){
-            getPlaces("List", null);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(!isRequestLocationUpdates){
+            isRequestLocationUpdates = true;
+            googleApiClient.connect();
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if(googleApiClient.isConnected()){
+            startLocationUpdates();
+        }
+    }
 
-        if(bestLocation == null || bestLocation.getAccuracy() > MIN_LAST_READ_ACCURACY || bestLocation.getTime() < System.currentTimeMillis() - TWO_MIN){
-            if(locationManager.getProvider(LocationManager.NETWORK_PROVIDER) != null){
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, POLLING_FREQ, MIN_DISTANCE, this);
-            }
-
-            if(locationManager.getProvider(LocationManager.GPS_PROVIDER) != null){
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, POLLING_FREQ, MIN_DISTANCE, this);
-            }
-
-            Executors.newScheduledThreadPool(1).schedule(new Runnable() {
-                @Override
-                public void run() {
-                    locationManager.removeUpdates(Main.this);
-                }
-            }, MEASURE_TIME, TimeUnit.MILLISECONDS);
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(googleApiClient.isConnected()){
+            stopLocationUpdates();
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        locationManager.removeUpdates(this);
+        googleApiClient.disconnect();
     }
 
     @Override
@@ -135,39 +138,71 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
         String searchData = null;
         if(requestCode == SEARCH_REQUEST && resultCode == RESULT_OK){
             searchData = data.getStringExtra("searchResult");
+            getPlaces("Search", searchData);
         }
+    }
 
-        getPlaces("Search", searchData);
+    @Override
+    public void onConnected(Bundle bundle) {
+        startLocationUpdates();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        googleApiClient.connect();
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        if(bestLocation == null || location.getAccuracy() < bestLocation.getAccuracy()){
-            Config.currentLatitude = location.getLatitude();
-            Config.currentLongitude = location.getLongitude();
+        lastLocation = location;
+        getPlaces("List", null);
+    }
 
-            bestLocation = location;
-            getPlaces("List", null);
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
 
-            if(bestLocation.getAccuracy() < MIN_ACCURACY){
-                locationManager.removeUpdates(this);
+    }
+
+    private boolean checkPlayServices(){
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+
+        if(resultCode != ConnectionResult.SUCCESS){
+            if(GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
             }
+            else {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.device_not_supported), Toast.LENGTH_LONG).show();
+            }
+
+            return false;
         }
+
+        return true;
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
+    protected synchronized void buildGoogleApiClient(){
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
     }
 
-    @Override
-    public void onProviderEnabled(String provider) {
+    protected void createLocationRequest(){
+        locationRequest = new LocationRequest();
 
+        locationRequest.setInterval(UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(FASTEST_INTERVAL);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setSmallestDisplacement(DISPLACEMENT);
     }
 
-    @Override
-    public void onProviderDisabled(String provider) {
+    private void startLocationUpdates(){
+        PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(
+                googleApiClient, locationRequest, this);
+    }
 
+    private void stopLocationUpdates(){
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
     }
 
     @Override
@@ -181,7 +216,31 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
                 ParseObject placeObject = data.get(i);
 
                 if(placeObject.getBoolean("visible")){
-                    places.add(new Place(placeObject.getObjectId(), placeObject.getString("name"), placeObject.getParseFile("preview_one").getUrl(), placeObject.getString("category"), Float.parseFloat(placeObject.getString("ranking")), placeObject.getParseGeoPoint("position").getLatitude(), placeObject.getParseGeoPoint("position").getLongitude(), placeObject.getNumber("rooms").intValue(), placeObject.getBoolean("visible")));
+                    places.add(
+                            new Place(
+                                 placeObject.getObjectId(),
+                                 placeObject.getString("name"),
+                                 placeObject.getParseFile("preview_one").getUrl(),
+                                 placeObject.getParseFile("preview_two").getUrl(),
+                                 placeObject.getParseFile("preview_three").getUrl(),
+                                 placeObject.getParseFile("preview_four").getUrl(),
+                                 placeObject.getParseFile("preview_five").getUrl(),
+                                 placeObject.getString("category"),
+                                 Float.parseFloat(placeObject.getString("ranking")),
+                                 placeObject.getParseGeoPoint("position").getLatitude(),
+                                 placeObject.getParseGeoPoint("position").getLongitude(),
+                                 placeObject.getNumber("rooms").intValue(),
+                                 placeObject.getBoolean("visible"),
+                                 placeObject.getString("address"),
+                                 placeObject.getString("city"),
+                                 placeObject.getString("depto"),
+                                 placeObject.getString("country"),
+                                 placeObject.getString("description"),
+                                 placeObject.getNumber("lowprice"),
+                                 placeObject.getNumber("highprice"),
+                                 placeObject.getString("phone")
+                            )
+                    );
                 }
             }
 
@@ -194,40 +253,10 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(getApplicationContext(), Detail.class);
-                    intent.putExtra("objectId", places.get(position).getPlaceCode());
-                    intent.putExtra("placeName", places.get(position).getPlaceName());
-
+                    intent.putExtra("placePosition", position);
                     startActivity(intent);
                 }
             });
-        }
-    }
-
-    private Location bestKnownLocation(float minAccuracy, float maxAge){
-        Location bestResult = null;
-        float bestAccuracy = Float.MAX_VALUE;
-        long bestTime = Long.MIN_VALUE;
-
-        List<String> allProviders = locationManager.getAllProviders();
-        for(String provider: allProviders){
-            Location location = locationManager.getLastKnownLocation(provider);
-            if(location != null){
-                float accuracy = location.getAccuracy();
-                long time = location.getTime();
-
-                if(accuracy < bestAccuracy){
-                    bestResult = location;
-                    bestAccuracy = accuracy;
-                    bestTime = time;
-                }
-            }
-        }
-
-        if(bestAccuracy > minAccuracy || (System.currentTimeMillis() - bestTime) > maxAge){
-            return null;
-        }
-        else{
-            return bestResult;
         }
     }
 
@@ -249,8 +278,17 @@ public class Main extends ActionBarActivity implements DataListener, LocationLis
             return;
         }
 
-        dataManager = new DataManager(this);
-        dataManager.setDataListener(this);
-        dataManager.execute(queryData);
+        //lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        if(lastLocation != null){
+            Config.currentLatitude = lastLocation.getLatitude();
+            Config.currentLongitude = lastLocation.getLongitude();
+
+            dataManager = new DataManager(this);
+            dataManager.setDataListener(this);
+            dataManager.execute(queryData);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_get_location), Toast.LENGTH_SHORT);
+        }
     }
 }

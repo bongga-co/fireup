@@ -27,6 +27,9 @@
     <color name="btn_show_more_desc">#33aa77</color>
     <color name="color_btn_show_more_desc">#33aa77</color>
 
+    <color name="btn_show_services">#33aa77</color>
+    <color name="color_btn_show_services">#33aa77</color>
+
     <color name="bg_place_panel">#ffffff</color>
     <color name="bg_wrapper_rating">#77c8cc54</color>
 
@@ -49,7 +52,7 @@
     <color name="swingerbar">#d70d5d</color>
     <color name="massagecenter">#c009ff</color>
 
-    <color name="available_room">#ffffff</color>
+    <color name="available_room">#333333</color>
     <color name="background_room">#00f9f9f9</color>
 
     <color name="dialog_box_text_color">#333333</color>
@@ -65,4 +68,9 @@
     <color name="btn_search_title_color">#ffffff</color>
 
     <color name="distance_value">#aa33aa77</color>
+
+    <color name="ranking_color">#ffffff</color>
+
+    <color name="description_dialog_text">#333333</color>
+    <color name="service_name">#333333</color>
 </resources>

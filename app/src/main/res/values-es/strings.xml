@@ -2,7 +2,82 @@
 <resources>
 
     <string name="app_name">FireUp</string>
-    <string name="hello_world">Hola mundo!</string>
-    <string name="action_settings">Configuraci\u00f3n</string>
+
+    <!-- Activities -->
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_search">Search</string>
+    <string name="title_activity_detail">Detail</string>
+
+    <!-- Main Activity -->
+    <string name="action_places_map">Map</string>
+    <string name="action_search">Search</string>
+    <string name="action_share">Share FireUp</string>
+    <string name="action_contact">Contact Us</string>
+    <string name="action_logout">Close Session</string>
+    <string name="action_places_my_location">Nearby Places</string>
+    <string name="empty_data">Oops! Something went wrong or there are no nearby places.</string>
+    <string name="available_rooms"> available rooms</string>
+    <string name="error_get_places">Unable to get places.</string>
+    <string name="error_get_location">Unable to get the device location.</string>
+    <string name="device_not_supported">This device do not support Google Play Services</string>
+
+    <!-- Map Activity -->
+    <string name="places_size">Results</string>
+    <string name="places_size_singular">Result</string>
+
+    <!-- Search Activity -->
+    <string name="desc_search">Choose one or more search fields to get the information you want.</string>
+    <string name="sr_low_price">Low Price</string>
+    <string name="sr_high_price">High Price</string>
+    <string name="sr_text_city">City</string>
+    <string name="sr_text_rating">Rating</string>
+    <string name="sr_text_distance">Distance</string>
+    <string name="bt_text_search">Search</string>
+    <string name="first_city">Choose City</string>
+    <string name="action_reset">Reset Fields</string>
+    <string name="error_search">Choose at least one search field</string>
+    <string name="error_search_exception">Unable to perform the search.</string>
+
+    <string-array name="cities">
+        <item>Choose City</item>
+        <item>Bello</item>
+        <item>Copacabana</item>
+        <item>Envigado</item>
+        <item>Itagu\u00ed</item>
+        <item>La Estrella</item>
+        <item>Medell\u00edn</item>
+        <item>Sabaneta</item>
+    </string-array>
+
+    <!-- Detail Activity -->
+    <string name="error_place_detail_data">Unable to get place information.</string>
+    <string name="btn_book_place">Book Room</string>
+    <string name="btn_show_more_desc">View All</string>
+    <string name="label_description">Description</string>
+    <string name="place_services">Services</string>
+    <string name="label_from">From</string>
+    <string name="label_to">To</string>
+    <string name="label_comment">Comments</string>
+    <string name="ok_btn">OK</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="comment_dialog_title">Insert Comment</string>
+    <string name="comment_dialog_desc">Insert a comment about place</string>
+    <string name="action_call">Call</string>
+    <string name="action_comments">Comments</string>
+    <string name="btn_show_services">Show Services</string>
+    <string name="error_services">Unable to get place services</string>
+
+    <!-- Place Categories -->
+    <string name="motel">Motel</string>
+    <string name="sexshop">Sex Shop</string>
+    <string name="gaybar">Gay Bar</string>
+    <string name="swingerbar">Swinger Bar</string>
+    <string name="massagecenter">Massage Center</string>
+
+    <!-- Globals -->
+    <string name="loader_message">Loading...</string>
+    <string name="error_network">No network connection, check your phone and try again.</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

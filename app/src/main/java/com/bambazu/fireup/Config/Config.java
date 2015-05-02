@@ -5,6 +5,7 @@ import android.app.Application;
 import com.bambazu.fireup.Helper.DistanceManager;
 import com.bambazu.fireup.Model.Place;
 import com.bambazu.fireup.R;
+import com.parse.ParseObject;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
