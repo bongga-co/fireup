@@ -71,7 +71,8 @@
         <activity
             android:name=".Comment"
             android:label="@string/title_activity_comment"
-            android:parentActivityName=".Detail" >
+            android:parentActivityName=".Detail"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bambazu.fireup.Detail" />

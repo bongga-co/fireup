@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.bambazu.fireup.Adapter.ServiceAdapter;
 import com.bambazu.fireup.Adapter.ViewPagerAdapter;
 import com.bambazu.fireup.Config.Config;
 import com.bambazu.fireup.Helper.DistanceManager;
+import com.bambazu.fireup.Helper.NetworkManager;
 import com.bambazu.fireup.Interfaz.CalculateDistanceListener;
 import com.bambazu.fireup.Model.Place;
 import com.bambazu.fireup.Model.Service;
@@ -34,6 +36,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.viewpagerindicator.UnderlinePageIndicator;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -46,14 +49,12 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
     private ArrayList<String> place_image;
     private int totalImages = 1;
     private UnderlinePageIndicator indicator;
-    private AQuery imgLoader;
     private TextView placeName;
     private RatingBar placeRating;
     private TextView placeCategory;
     private TextView placeLowPrice;
     private TextView placeHighPrice;
     private TextView placeDescription;
-    private ImageView placeLocation;
     private TextView placeAddress;
     private TextView placePhone;
     private TextView placeCity;
@@ -66,17 +67,19 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
     private  static String latitude;
     private static String longitude;
     private LinearLayout linearLayoutForMap;
+    private RelativeLayout mapWrapper;
     private String objectId;
     private ListView listServices;
     private View serviceWrapper;
     private String phone;
+    private NetworkManager networkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        imgLoader = new AQuery(this);
+        networkManager = new NetworkManager(this);
 
         viewPager = (ViewPager) findViewById(R.id.place_pager);
 
@@ -86,8 +89,8 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
         placeLowPrice = (TextView) findViewById(R.id.detail_low_price);
         placeHighPrice = (TextView) findViewById(R.id.detail_high_price);
 
-        placeLocation = (ImageView) findViewById(R.id.detail_place_location);
-        placeLocation.setOnClickListener(this);
+        mapWrapper = (RelativeLayout) findViewById(R.id.map_wrapper);
+        mapWrapper.setOnClickListener(this);
 
         linearLayoutForMap = (LinearLayout) findViewById(R.id.map_info_wrapper);
         linearLayoutForMap.setOnClickListener(this);
@@ -117,9 +120,16 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
             queryData.put("destinationLatitude", placeData.getLatitude());
             queryData.put("destinationLongitude", placeData.getLongitude());
 
-            final DistanceManager distance = new DistanceManager();
-            distance.setCalculateDistanceListener(this);
-            distance.execute(queryData);
+            if(networkManager.isNetworkOnline()){
+                placeDistance.setText(getResources().getString(R.string.calculate_distance));
+
+                final DistanceManager distance = new DistanceManager();
+                distance.setCalculateDistanceListener(this);
+                distance.execute(queryData);
+            }
+            else{
+                placeDistance.setText("--");
+            }
         }
         else{
             Toast.makeText(this, getResources().getString(R.string.error_place_detail_data), Toast.LENGTH_SHORT).show();
@@ -163,19 +173,20 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
                 showServices();
                 break;
 
-            case R.id.detail_place_location:
+            case R.id.map_wrapper:
             case R.id.map_info_wrapper:
-                //Intent i = new Intent(Detail.this, Map.class);
+                Intent i = new Intent(Detail.this, Map.class);
                 //i.putExtra("latitude", latitude);
                 //i.putExtra("longitude", longitude);
-                //startActivity(i);
+                startActivity(i);
                 break;
         }
     }
 
     @Override
     public void calculateDistance(String distance) {
-        placeDistance.setText(distance);
+        String d = (distance != null) ? distance : "--";
+        placeDistance.setText(d);
     }
 
     private void showPlaceData(Place placeData){
@@ -218,10 +229,6 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
         latitude = String.valueOf(placeData.getLatitude());
         longitude = String.valueOf(placeData.getLongitude());
-        String urlMapImage = "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=17&size=450x350&scale=4&sensor=false";
-
-        AQuery asyncLoader = imgLoader.recycle(placeLocation);
-        asyncLoader.id(placeLocation).progress(R.drawable.no_image_available).image(urlMapImage, true, true, 0, R.drawable.no_image_available, null, AQuery.FADE_IN);
 
         placeAddress.setText(placeData.getAddress());
         placePhone.setText(placeData.getPhone().toString().substring(3));
@@ -283,6 +290,14 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
         query.whereMatchesQuery("idPlace", innerQuery);
         query.include("idService");
 
+        if(!networkManager.isNetworkOnline()){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        gridServices.setEnabled(false);
+        gridServices.setText(getResources().getString(R.string.loader_message));
+
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
@@ -312,13 +327,22 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
                         dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
+                                gridServices.setEnabled(true);
+                                gridServices.setText(getResources().getString(R.string.btn_show_services));
                             }
                         });
 
                         AlertDialog alertDialog = dialog.create();
                         alertDialog.show();
                     }
+                    else{
+                        gridServices.setEnabled(true);
+                        gridServices.setText(getResources().getString(R.string.btn_show_services));
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_services_available), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
+                    gridServices.setEnabled(true);
+                    gridServices.setText(getResources().getString(R.string.btn_show_services));
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_services), Toast.LENGTH_SHORT).show();
                 }
             }

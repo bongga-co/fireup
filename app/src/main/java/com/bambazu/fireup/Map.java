@@ -60,9 +60,7 @@ public class Map extends ActionBarActivity {
                 @Override
                 public void onInfoWindowClick(Marker marker) {
                 Intent intent = new Intent(Map.this, Detail.class);
-                intent.putExtra("objectId", idMarker.get(marker)[0]);
-                intent.putExtra("placeName", idMarker.get(marker)[1]);
-
+                intent.putExtra("placePosition", Integer.parseInt(idMarker.get(marker)[0]));
                 startActivity(intent);
                 }
             });
@@ -81,8 +79,7 @@ public class Map extends ActionBarActivity {
                                     .icon(BitmapDescriptorFactory.fromResource(getResources().getIdentifier(setPlaceIcon(Config.currentPlaces.get(i).getPlaceCategory()), "drawable", getApplicationContext().getPackageName()))));
 
                             idMarker.put(marker, new String[]{
-                                    Config.currentPlaces.get(i).getPlaceCode(),
-                                    Config.currentPlaces.get(i).getPlaceName()
+                                    String.valueOf(i)
                             });
                         }
                     }

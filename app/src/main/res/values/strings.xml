@@ -66,6 +66,8 @@
     <string name="action_comments">Comments</string>
     <string name="btn_show_services">Show Services</string>
     <string name="error_services">Unable to get place services</string>
+    <string name="calculate_distance">Calculating distance...</string>
+    <string name="no_services_available">No available services</string>
 
     <!-- Place Categories -->
     <string name="motel">Motel</string>

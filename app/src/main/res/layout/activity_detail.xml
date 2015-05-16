@@ -1,7 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.bambazu.fireup.Detail">
 
     <ScrollView
         android:id="@+id/place_detail_content"
@@ -158,14 +160,9 @@
             <RelativeLayout
                 android:id="@+id/map_wrapper"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/generic_three"
+                android:layout_height="200dp"
+                android:background="@drawable/img_map_location"
                 android:layout_below="@+id/price_wrapper">
-
-                <ImageView
-                    android:id="@+id/detail_place_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp" />
 
                 <LinearLayout
                     android:id="@+id/map_info_wrapper"
@@ -175,7 +172,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="0dp"
-                    android:layout_alignBottom="@+id/detail_place_location"
+                    android:layout_alignParentBottom="true"
                     android:padding="10dp"
                     android:background="@drawable/conatiner_shadow_location"
                     android:clickable="true">
@@ -189,7 +186,7 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_launcher"/>
+                            android:src="@drawable/ic_action_arrow_right_top"/>
 
                         <TextView
                             android:id="@+id/detail_place_address"
@@ -209,7 +206,7 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_launcher"/>
+                            android:src="@drawable/ic_action_phone"/>
 
                         <TextView
                             android:id="@+id/detail_place_phone"
@@ -229,7 +226,7 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_launcher"/>
+                            android:src="@drawable/ic_action_globe"/>
 
                         <TextView
                             android:id="@+id/detail_place_city"
@@ -249,7 +246,7 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_launcher"/>
+                            android:src="@drawable/ic_action_car"/>
 
                         <TextView
                             android:id="@+id/detail_place_distance"
