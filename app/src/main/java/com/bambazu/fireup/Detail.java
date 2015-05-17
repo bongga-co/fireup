@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -22,7 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.androidquery.AQuery;
 import com.bambazu.fireup.Adapter.ServiceAdapter;
 import com.bambazu.fireup.Adapter.ViewPagerAdapter;
 import com.bambazu.fireup.Config.Config;
@@ -35,7 +33,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.viewpagerindicator.UnderlinePageIndicator;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -48,7 +46,7 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
     private PagerAdapter pagerAdapter;
     private ArrayList<String> place_image;
     private int totalImages = 1;
-    private UnderlinePageIndicator indicator;
+    private CirclePageIndicator indicator;
     private TextView placeName;
     private RatingBar placeRating;
     private TextView placeCategory;
@@ -64,8 +62,6 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
     private Button btnShowDescription;
     private static String desc;
-    private  static String latitude;
-    private static String longitude;
     private LinearLayout linearLayoutForMap;
     private RelativeLayout mapWrapper;
     private String objectId;
@@ -176,8 +172,6 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
             case R.id.map_wrapper:
             case R.id.map_info_wrapper:
                 Intent i = new Intent(Detail.this, Map.class);
-                //i.putExtra("latitude", latitude);
-                //i.putExtra("longitude", longitude);
                 startActivity(i);
                 break;
         }
@@ -216,8 +210,7 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
         pagerAdapter = new ViewPagerAdapter(Detail.this, place_image, totalImages);
         viewPager.setAdapter(pagerAdapter);
 
-        indicator = (UnderlinePageIndicator) findViewById(R.id.indicator);
-        indicator.setFades(false);
+        indicator = (CirclePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(viewPager);
 
         placeName.setText(placeData.getPlaceName());
@@ -226,9 +219,6 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
         placeLowPrice.setText(formatCurrency(placeData.getLowprice()));
         placeHighPrice.setText(formatCurrency(placeData.getHighprice()));
-
-        latitude = String.valueOf(placeData.getLatitude());
-        longitude = String.valueOf(placeData.getLongitude());
 
         placeAddress.setText(placeData.getAddress());
         placePhone.setText(placeData.getPhone().toString().substring(3));
