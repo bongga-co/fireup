@@ -226,7 +226,7 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
                                  placeObject.getParseFile("preview_four").getUrl(),
                                  placeObject.getParseFile("preview_five").getUrl(),
                                  placeObject.getString("category"),
-                                 Float.parseFloat(placeObject.getString("ranking")),
+                                 placeObject.getNumber("ranking"),
                                  placeObject.getParseGeoPoint("position").getLatitude(),
                                  placeObject.getParseGeoPoint("position").getLongitude(),
                                  placeObject.getNumber("rooms").intValue(),

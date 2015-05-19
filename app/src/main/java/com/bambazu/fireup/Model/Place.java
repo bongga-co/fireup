@@ -13,7 +13,7 @@ public class Place {
     private String placeIcon4;
     private String placeIcon5;
     private String placeCategory;
-    private float placeRanking;
+    private Number placeRanking;
     private double latitude;
     private double longitude;
     private int rooms;
@@ -27,7 +27,7 @@ public class Place {
     private Number highprice;
     private String phone;
 
-    public Place(String placeCode, String placeName, String placeIcon, String placeIcon2, String placeIcon3, String placeIcon4, String placeIcon5, String placeCategory, float placeRanking, double latitude, double longitude, int rooms, boolean visible, String address, String city, String depto, String country, String description, Number lowprice, Number highprice, String phone){
+    public Place(String placeCode, String placeName, String placeIcon, String placeIcon2, String placeIcon3, String placeIcon4, String placeIcon5, String placeCategory, Number placeRanking, double latitude, double longitude, int rooms, boolean visible, String address, String city, String depto, String country, String description, Number lowprice, Number highprice, String phone){
         this.placeCode = placeCode;
         this.placeName = placeName;
         this.placeIcon = placeIcon;
@@ -115,11 +115,11 @@ public class Place {
         this.placeCategory = placeCategory;
     }
 
-    public float getPlaceRanking() {
+    public Number getPlaceRanking() {
         return placeRanking;
     }
 
-    public void setPlaceRanking(float placeRanking) {
+    public void setPlaceRanking(Number placeRanking) {
         this.placeRanking = placeRanking;
     }
 

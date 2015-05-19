@@ -46,11 +46,11 @@
     <color name="btn_bg_facebook">#3B5998</color>
     <color name="btn_facebook_color">#ffffff</color>
 
-    <color name="motel">#670951</color>
-    <color name="sexshop">#6709aa</color>
-    <color name="gaybar">#675951</color>
-    <color name="swingerbar">#d70d5d</color>
-    <color name="massagecenter">#c009ff</color>
+    <color name="motel">#ff4444</color>
+    <color name="sexshop">#ff70ba</color>
+    <color name="gaybar">#be0aff</color>
+    <color name="swingerbar">#ff3d84</color>
+    <color name="massagecenter">#ff473d</color>
 
     <color name="available_room">#333333</color>
     <color name="background_room">#00f9f9f9</color>

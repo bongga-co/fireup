@@ -9,9 +9,9 @@
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
 
-    <item
+    <!--<item
         android:id="@+id/action_comments"
         android:icon="@drawable/ic_comments"
         android:title="@string/action_comments"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />-->
 </menu>

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,13 +22,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Search extends ActionBarActivity {
-
-    private String cities;
-
     private EditText lowPrice;
     private EditText highPrice;
     private Spinner cityName;
-    private static ArrayList listCity;
     private RatingBar ratingPlace;
     private SeekBar placeDistance;
     private TextView placeDistanceValue;
@@ -92,16 +87,16 @@ public class Search extends ActionBarActivity {
                     //Price
                     if((lowPrice.getText().toString().length() != 0 && lowPrice.getText().toString().matches(validateNumber))
                             && highPrice.getText().length() == 0){
-                        searchFields.put("lowprice", lowPrice.getText().toString());
+                        searchFields.put("lowprice", Long.parseLong(lowPrice.getText().toString()));
                     }
-                    else if(lowPrice.getText().toString().length() == 0 && highPrice.getText().length() != 0
-                            && highPrice.getText().toString().matches(validateNumber)){
-                        searchFields.put("highprice", highPrice.getText().toString());
+                    else if((highPrice.getText().toString().length() != 0 && highPrice.getText().toString().matches(validateNumber))
+                            && lowPrice.getText().toString().length() == 0){
+                        searchFields.put("highprice", Long.parseLong(highPrice.getText().toString()));
                     }
-                    else if(lowPrice.getText().toString().length() != 0 && highPrice.getText().length() != 0
+                    else if(lowPrice.getText().toString().length() != 0 && highPrice.getText().toString().length() != 0
                             && lowPrice.getText().toString().matches(validateNumber) && highPrice.getText().toString().matches(validateNumber)){
-                        searchFields.put("lowprice", lowPrice.getText().toString());
-                        searchFields.put("highprice", highPrice .getText().toString());
+                        searchFields.put("lowprice", Long.parseLong(lowPrice.getText().toString()));
+                        searchFields.put("highprice", Long.parseLong(highPrice.getText().toString()));
                     }
 
                     //City

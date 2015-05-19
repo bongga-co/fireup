@@ -83,6 +83,14 @@
                         android:layout_centerInParent="true"
                         style="@style/heartRatingBar"/>
 
+                    <TextView
+                        android:id="@+id/detail_place_available_rooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@+id/detail_place_rating"
+                        android:layout_marginTop="30dp" />
+
                 </RelativeLayout>
 
             </LinearLayout>

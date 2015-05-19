@@ -68,6 +68,8 @@
     <string name="error_services">Unable to get place services</string>
     <string name="calculate_distance">Calculating distance...</string>
     <string name="no_services_available">No available services</string>
+    <string name="show_route_title">How To Get</string>
+    <string name="show_route_msg">Follow the directions to the place</string>
 
     <!-- Place Categories -->
     <string name="motel">Motel</string>

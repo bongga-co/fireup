@@ -3,10 +3,8 @@ package com.bambazu.fireup.Helper;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -71,44 +69,44 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
                 try{
                     searchData = new JSONObject((String) data[0].get("search"));
 
-                    //Price
-
+                    //City
                     if(!searchData.getString("city").equals("Choose City") || !searchData.getString("city").equals("Seleccione Ciudad")){
                         query.whereEqualTo("city", searchData.getString("city"));
                     }
 
+                    //LowPrice
+                    /*if(searchData.getLong("lowprice") >= 0){
+                        query.whereGreaterThanOrEqualTo("lowprice", searchData.getLong("lowprice"));
+                    }*/
 
-                    Log.i("FireUp", String.valueOf(searchData.getInt("rating")));
-                    Log.i("FireUp", String.valueOf(searchData.getInt("distance")));
+                    //HighPrice
+                    /*if(searchData.getLong("highprice") >= 0){
+                        Log.i("FireUp-High", String.valueOf(searchData.getLong("highprice")));
+                        query.whereLessThanOrEqualTo("highprice", searchData.getLong("highprice"));
+                    }*/
+
+                    //Rating
                     /*if(searchData.getInt("rating") != 0){
-                        query.whereEqualTo("ranking", String.valueOf(searchData.getInt("rating")));
-                    }
+                        query.whereEqualTo("ranking", searchData.getInt("rating"));
+                    }*/
 
-                    if(searchData.getInt("distance") != 0){
+                    //Distance
+                    /*if(searchData.getInt("distance") != 0){
                         query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), searchData.getInt("distance"));
                     }*/
                 }
                 catch (JSONException e){}
             }
 
-            query.findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> parseObjects, ParseException e) {
-                    if(e == null){
-                        dataListener.retrieveData(parseObjects);
-                    }
-                    else {
-                        Toast.makeText(context, context.getResources().getString(R.string.error_get_places), Toast.LENGTH_SHORT).show();
-                    }
-
-                    if(loader != null){
-                        loader.dismiss();
-                        loader = null;
-                    }
-                }
-            });
+            try{
+                responseObject = query.find();
+                hideLoading();
+            }
+            catch (ParseException e){
+                Toast.makeText(context, context.getResources().getString(R.string.error_get_places), Toast.LENGTH_SHORT).show();
+            }
         }
-        else{
+        else {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Places");
             query.getInBackground(objectId, new GetCallback<ParseObject>() {
                 public void done(ParseObject object, ParseException e) {
@@ -117,15 +115,11 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
                         parseObjects.add(object);
 
                         dataListener.retrieveData(parseObjects);
-                    }
-                    else {
+                    } else {
                         Toast.makeText(context, context.getResources().getString(R.string.error_place_detail_data), Toast.LENGTH_SHORT).show();
                     }
 
-                    if(loader != null){
-                        loader.dismiss();
-                        loader = null;
-                    }
+                    hideLoading();
                 }
             });
         }
@@ -136,9 +130,17 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
     @Override
     protected void onPostExecute(List<ParseObject> parseObjects) {
         super.onPostExecute(parseObjects);
+        dataListener.retrieveData(parseObjects);
     }
 
     public void setDataListener(DataListener listener) {
         this.dataListener = listener;
+    }
+
+    private void hideLoading(){
+        if (loader != null) {
+            loader.dismiss();
+            loader = null;
+        }
     }
 }

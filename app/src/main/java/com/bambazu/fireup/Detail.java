@@ -57,6 +57,7 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
     private TextView placePhone;
     private TextView placeCity;
     private TextView placeDistance;
+    private TextView placeAvailableRooms;
 
     private Button gridServices;
 
@@ -68,6 +69,8 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
     private ListView listServices;
     private View serviceWrapper;
     private String phone;
+    private double lat;
+    private double lng;
     private NetworkManager networkManager;
 
     @Override
@@ -95,6 +98,7 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
         placePhone = (TextView) findViewById(R.id.detail_place_phone);
         placeCity = (TextView) findViewById(R.id.detail_place_city);
         placeDistance = (TextView) findViewById(R.id.detail_place_distance);
+        placeAvailableRooms = (TextView) findViewById(R.id.detail_place_available_rooms);
 
         gridServices = (Button) findViewById(R.id.gridServices);
         gridServices.setOnClickListener(this);
@@ -147,10 +151,10 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
             callPlace();
             return true;
         }
-        else if (id == R.id.action_comments) {
+        /*else if (id == R.id.action_comments) {
             openComments();
             return true;
-        }
+        }*/
         else if(id == android.R.id.home){
             NavUtils.navigateUpFromSameTask(this);
         }
@@ -171,8 +175,7 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
             case R.id.map_wrapper:
             case R.id.map_info_wrapper:
-                Intent i = new Intent(Detail.this, Map.class);
-                startActivity(i);
+                takeMeToThePlace();
                 break;
         }
     }
@@ -215,7 +218,11 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
         placeName.setText(placeData.getPlaceName());
         placeCategory.setText(getApplicationContext().getResources().getIdentifier(placeData.getPlaceCategory().toLowerCase(), "string", getApplicationContext().getPackageName()));
-        placeRating.setRating(Float.valueOf(placeData.getPlaceRanking()));
+        placeRating.setRating(placeData.getPlaceRanking().floatValue());
+
+        if(placeCategory.getText().toString().toLowerCase().equals("motel") && placeData.getRooms() > 0){
+            placeAvailableRooms.setText(placeData.getRooms() + " " + getResources().getString(R.string.available_rooms));
+        }
 
         placeLowPrice.setText(formatCurrency(placeData.getLowprice()));
         placeHighPrice.setText(formatCurrency(placeData.getHighprice()));
@@ -226,6 +233,8 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
         placeDescription.setText(showPlaceDescription(placeData.getDescription()));
         phone = placeData.getPhone();
+        lat = placeData.getLatitude();
+        lng = placeData.getLongitude();
     }
 
     private String showPlaceDescription(String placeDescription){
@@ -324,8 +333,7 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
                         AlertDialog alertDialog = dialog.create();
                         alertDialog.show();
-                    }
-                    else{
+                    } else {
                         gridServices.setEnabled(true);
                         gridServices.setText(getResources().getString(R.string.btn_show_services));
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_services_available), Toast.LENGTH_SHORT).show();
@@ -349,5 +357,27 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
         Intent intent = new Intent(getApplicationContext(), Comment.class);
         intent.putExtra("objectId", objectId);
         startActivity(intent);
+    }
+
+    private void takeMeToThePlace(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(Detail.this);
+        dialog.setTitle(getResources().getString(R.string.show_route_title));
+        dialog.setMessage(getResources().getString(R.string.show_route_msg));
+        dialog.setPositiveButton("Take Me", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?saddr="+Config.currentLatitude+","+Config.currentLongitude+"&daddr="+lat+","+lng+"&mode=driving"));
+                startActivity(intent);
+            }
+        });
+
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
     }
 }
