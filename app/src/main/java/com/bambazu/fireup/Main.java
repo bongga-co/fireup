@@ -139,6 +139,8 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
         if(requestCode == SEARCH_REQUEST && resultCode == RESULT_OK){
             searchData = data.getStringExtra("searchResult");
             getPlaces("Search", searchData);
+
+            listPlaces.setAdapter(null);
         }
     }
 

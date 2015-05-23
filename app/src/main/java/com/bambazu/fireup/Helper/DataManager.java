@@ -57,71 +57,59 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
         objectId = (String) data[0].get("objectId");
         queryType = (String) data[0].get("queryType");
 
-        if(objectId == null){
-            ParseQuery<ParseObject> query = ParseQuery.getQuery(objectType);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(objectType);
 
-            if(queryType.equals("List")){
-                query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), 3);
-            }
-            else{
-                JSONObject searchData = null;
-
-                try{
-                    searchData = new JSONObject((String) data[0].get("search"));
-
-                    //City
-                    if(!searchData.getString("city").equals("Choose City") || !searchData.getString("city").equals("Seleccione Ciudad")){
-                        query.whereEqualTo("city", searchData.getString("city"));
-                    }
-
-                    //LowPrice
-                    /*if(searchData.getLong("lowprice") >= 0){
-                        query.whereGreaterThanOrEqualTo("lowprice", searchData.getLong("lowprice"));
-                    }*/
-
-                    //HighPrice
-                    /*if(searchData.getLong("highprice") >= 0){
-                        Log.i("FireUp-High", String.valueOf(searchData.getLong("highprice")));
-                        query.whereLessThanOrEqualTo("highprice", searchData.getLong("highprice"));
-                    }*/
-
-                    //Rating
-                    /*if(searchData.getInt("rating") != 0){
-                        query.whereEqualTo("ranking", searchData.getInt("rating"));
-                    }*/
-
-                    //Distance
-                    /*if(searchData.getInt("distance") != 0){
-                        query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), searchData.getInt("distance"));
-                    }*/
-                }
-                catch (JSONException e){}
-            }
+        if(queryType.equals("List")){
+            query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), 3);
 
             try{
                 responseObject = query.find();
-                hideLoading();
             }
             catch (ParseException e){
                 Toast.makeText(context, context.getResources().getString(R.string.error_get_places), Toast.LENGTH_SHORT).show();
             }
         }
-        else {
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Places");
-            query.getInBackground(objectId, new GetCallback<ParseObject>() {
-                public void done(ParseObject object, ParseException e) {
-                    if (e == null) {
-                        ArrayList<ParseObject> parseObjects = new ArrayList<ParseObject>();
-                        parseObjects.add(object);
+        else{
+            JSONObject searchData = null;
 
-                        dataListener.retrieveData(parseObjects);
-                    } else {
-                        Toast.makeText(context, context.getResources().getString(R.string.error_place_detail_data), Toast.LENGTH_SHORT).show();
-                    }
+            try{
+                searchData = new JSONObject((String) data[0].get("search"));
 
-                    hideLoading();
+                //LowPrice
+                if(searchData.getLong("lowprice") > 0){
+                    query.whereGreaterThanOrEqualTo("lowprice", searchData.getLong("lowprice"));
                 }
-            });
+
+                //HighPrice
+                if(searchData.getLong("highprice") > 0){
+                    query.whereLessThanOrEqualTo("highprice", searchData.getLong("highprice"));
+                }
+
+                //City
+                if(!searchData.getString("city").equals("")){
+                    query.whereEqualTo("city", searchData.getString("city"));
+                }
+
+                //Rating
+                if(searchData.getInt("rating") != 0){
+                    query.whereEqualTo("ranking", searchData.getInt("rating"));
+                }
+
+                //Distance
+                if(searchData.getInt("distance") != 0){
+                    query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), searchData.getInt("distance"));
+                }
+            }
+            catch (JSONException e){
+                Toast.makeText(context, context.getResources().getString(R.string.error_get_places), Toast.LENGTH_SHORT).show();
+            }
+
+            try{
+                responseObject = query.find();
+            }
+            catch (ParseException e){
+                Toast.makeText(context, context.getResources().getString(R.string.error_get_places), Toast.LENGTH_SHORT).show();
+            }
         }
 
         return responseObject;
@@ -130,7 +118,14 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
     @Override
     protected void onPostExecute(List<ParseObject> parseObjects) {
         super.onPostExecute(parseObjects);
-        dataListener.retrieveData(parseObjects);
+        hideLoading();
+
+        if(parseObjects != null){
+            dataListener.retrieveData(parseObjects);
+        }
+        else {
+            Toast.makeText(context, context.getResources().getString(R.string.error_get_places), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void setDataListener(DataListener listener) {

@@ -50,6 +50,7 @@ public class Search extends ActionBarActivity {
         cityName.setAdapter(adapter);
 
         ratingPlace = (RatingBar) findViewById(R.id.sr_rating);
+        ratingPlace.setRating(0);
         placeDistanceValue = (TextView) findViewById(R.id.sr_distance_value);
         placeDistance = (SeekBar) findViewById(R.id.sr_distance);
         placeDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -85,22 +86,43 @@ public class Search extends ActionBarActivity {
 
                 try{
                     //Price
-                    if((lowPrice.getText().toString().length() != 0 && lowPrice.getText().toString().matches(validateNumber))
-                            && highPrice.getText().length() == 0){
+                    /*if((lowPrice.getText().toString().length() > 0 && lowPrice.getText().toString().matches(validateNumber))
+                            && highPrice.getText().length() <= 0){
                         searchFields.put("lowprice", Long.parseLong(lowPrice.getText().toString()));
                     }
-                    else if((highPrice.getText().toString().length() != 0 && highPrice.getText().toString().matches(validateNumber))
-                            && lowPrice.getText().toString().length() == 0){
+                    else if((highPrice.getText().toString().length() > 0 && highPrice.getText().toString().matches(validateNumber))
+                            && lowPrice.getText().toString().length() <= 0){
                         searchFields.put("highprice", Long.parseLong(highPrice.getText().toString()));
                     }
-                    else if(lowPrice.getText().toString().length() != 0 && highPrice.getText().toString().length() != 0
+                    else if(lowPrice.getText().toString().length() > 0 && highPrice.getText().toString().length() > 0
                             && lowPrice.getText().toString().matches(validateNumber) && highPrice.getText().toString().matches(validateNumber)){
                         searchFields.put("lowprice", Long.parseLong(lowPrice.getText().toString()));
                         searchFields.put("highprice", Long.parseLong(highPrice.getText().toString()));
+                    }*/
+
+                    //Prices
+                    if(lowPrice.getText().length() > 0){
+                        searchFields.put("lowprice", Long.parseLong(lowPrice.getText().toString()));
+                    }
+                    else{
+                        searchFields.put("lowprice", 0);
+                    }
+
+                    if(highPrice.getText().length() > 0){
+                        searchFields.put("highprice", Long.parseLong(highPrice.getText().toString()));
+                    }
+                    else{
+                        searchFields.put("highprice", 0);
                     }
 
                     //City
-                    searchFields.put("city", cityName.getSelectedItem());
+                    if(!cityName.getSelectedItem().equals(getResources().getString(R.string.first_city))){
+                        searchFields.put("city", cityName.getSelectedItem());
+                    }
+                    else{
+                        searchFields.put("city", "");
+                    }
+
                     //Rating
                     searchFields.put("rating", (int)ratingPlace.getRating());
                     //Distance
