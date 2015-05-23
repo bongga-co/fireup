@@ -4,42 +4,44 @@
     <string name="app_name">FireUp</string>
 
     <!-- Activities -->
-    <string name="title_activity_map">Map</string>
-    <string name="title_activity_search">Search</string>
-    <string name="title_activity_detail">Detail</string>
+    <string name="title_activity_map">Mapa</string>
+    <string name="title_activity_search">B\u00fasqueda</string>
+    <string name="title_activity_detail">Detalle</string>
 
     <!-- Main Activity -->
-    <string name="action_places_map">Map</string>
-    <string name="action_search">Search</string>
-    <string name="action_share">Share FireUp</string>
-    <string name="action_contact">Contact Us</string>
-    <string name="action_logout">Close Session</string>
-    <string name="action_places_my_location">Nearby Places</string>
-    <string name="empty_data">Oops! Something went wrong or there are no nearby places.</string>
-    <string name="available_rooms"> available rooms</string>
-    <string name="error_get_places">Unable to get places.</string>
-    <string name="error_get_location">Unable to get the device location.</string>
-    <string name="device_not_supported">This device do not support Google Play Services</string>
+    <string name="action_places_map">Mapa</string>
+    <string name="action_search">Buscar</string>
+    <string name="action_share">Compartir FireUp</string>
+    <string name="action_contact">Cont\u00e1ctanos</string>
+    <string name="action_logout">Cerrar Sesi\u00f3n</string>
+    <string name="action_places_my_location">Lugares Cercanos</string>
+    <string name="empty_data">Oops! Algo anduvo mal o no hay lugares disponibles.</string>
+    <string name="available_rooms"> habitaciones disponibles</string>
+    <string name="error_get_places">No se pudo obtner los lugares.</string>
+    <string name="error_get_location">No se pudo obtener la ubicaci\u00f3n del dispositivo.</string>
+    <string name="device_not_supported">Este dispositivo no soporta Google Play Services</string>
+    <string name="share_text">Prueba FireUp!, la app donde podr\u00e1s encontrar los lugares de entretenimiento para adultos y vivir un momento placentero con tu pareja. \n\nNo olvides compartirla con tus amigos. \n\nhttps://play.google.com/store/apps/details?id=com.bambazu.fireup</string>
+    <string name="share_chooser_title">Compartir FireUp</string>
 
     <!-- Map Activity -->
-    <string name="places_size">Results</string>
-    <string name="places_size_singular">Result</string>
+    <string name="places_size">Resultados</string>
+    <string name="places_size_singular">Resultado</string>
 
     <!-- Search Activity -->
-    <string name="desc_search">Choose one or more search fields to get the information you want.</string>
-    <string name="sr_low_price">Low Price</string>
-    <string name="sr_high_price">High Price</string>
-    <string name="sr_text_city">City</string>
-    <string name="sr_text_rating">Rating</string>
-    <string name="sr_text_distance">Distance</string>
-    <string name="bt_text_search">Search</string>
-    <string name="first_city">Choose City</string>
-    <string name="action_reset">Reset Fields</string>
-    <string name="error_search">Choose at least one search field</string>
-    <string name="error_search_exception">Unable to perform the search.</string>
+    <string name="desc_search">Elige uno o m\u00e1s criterios de b\u00fasqueda para obtener la informaci\u00f3n que deseas.</string>
+    <string name="sr_low_price">Precio M\u00ednimo</string>
+    <string name="sr_high_price">Precio M\u00e1ximo</string>
+    <string name="sr_text_city">Ciudad</string>
+    <string name="sr_text_rating">Valoraci\u00f3n</string>
+    <string name="sr_text_distance">Distancia</string>
+    <string name="bt_text_search">Buscar</string>
+    <string name="first_city">Seleccione Ciudad</string>
+    <string name="action_reset">Limpiar Campos</string>
+    <string name="error_search">Elegir por lo menos un campo de b\u00fasqueda.</string>
+    <string name="error_search_exception">No se pudo realizar la b\u00fasqueda.</string>
 
     <string-array name="cities">
-        <item>Choose City</item>
+        <item>Seleccione Ciudad</item>
         <item>Bello</item>
         <item>Copacabana</item>
         <item>Envigado</item>
@@ -50,34 +52,40 @@
     </string-array>
 
     <!-- Detail Activity -->
-    <string name="error_place_detail_data">Unable to get place information.</string>
-    <string name="btn_book_place">Book Room</string>
-    <string name="btn_show_more_desc">View All</string>
-    <string name="label_description">Description</string>
-    <string name="place_services">Services</string>
-    <string name="label_from">From</string>
-    <string name="label_to">To</string>
-    <string name="label_comment">Comments</string>
-    <string name="ok_btn">OK</string>
-    <string name="cancel_btn">Cancel</string>
-    <string name="comment_dialog_title">Insert Comment</string>
-    <string name="comment_dialog_desc">Insert a comment about place</string>
-    <string name="action_call">Call</string>
-    <string name="action_comments">Comments</string>
-    <string name="btn_show_services">Show Services</string>
-    <string name="error_services">Unable to get place services</string>
+    <string name="error_place_detail_data">No se pudo obtener la informaci\u00f3n del lugar.</string>
+    <string name="btn_book_place">Reservar Habitaci\u00f3n</string>
+    <string name="btn_show_more_desc">Ver Todo</string>
+    <string name="label_description">Descripci\u00f3n</string>
+    <string name="place_services">Servicios</string>
+    <string name="label_from">Desde</string>
+    <string name="label_to">Hasta</string>
+    <string name="label_comment">Comentarios</string>
+    <string name="ok_btn">Aceptar</string>
+    <string name="cancel_btn">Cancelar</string>
+    <string name="comment_dialog_title">Ingrese Comentario</string>
+    <string name="comment_dialog_desc">Inserte un comentario sobre el lugar</string>
+    <string name="action_call">Lllamar</string>
+    <string name="action_comments">Comentarios</string>
+    <string name="btn_show_services">Mostrar Servicios</string>
+    <string name="error_services">No se pudo obtener los servicios disponibles en el lugar</string>
+    <string name="calculate_distance">Calculando distancia...</string>
+    <string name="no_services_available">No hay servicios disponibles</string>
+    <string name="show_route_title">¿C\u00f3mo Llegar?</string>
+    <string name="show_route_msg">Sigue las instrucciones para llegar al lugar</string>
+    <string name="take_me">C\u00f3mo LLegar</string>
 
     <!-- Place Categories -->
     <string name="motel">Motel</string>
-    <string name="sexshop">Sex Shop</string>
-    <string name="gaybar">Gay Bar</string>
-    <string name="swingerbar">Swinger Bar</string>
-    <string name="massagecenter">Massage Center</string>
+    <string name="sexshop">Tienda Er\u00f3tica</string>
+    <string name="gaybar">Bar Gay</string>
+    <string name="swingerbar">Bar Swinger</string>
+    <string name="massagecenter">Centro de Masajes</string>
 
     <!-- Globals -->
-    <string name="loader_message">Loading...</string>
-    <string name="error_network">No network connection, check your phone and try again.</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="loader_message">Cargando...</string>
+    <string name="error_network">No hay conexi\u00f3n a internet, revisa tu conexi\u00f3n e intenta e nuevo.</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="title_activity_comment">Comentarios</string>
+    <string name="title_activity_splash">Splash</string>
 
 </resources>

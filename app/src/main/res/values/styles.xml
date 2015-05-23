@@ -12,4 +12,11 @@
         <item name="android:maxHeight">48dip</item>
     </style>
 
+    <style name="Splash" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
 </resources>

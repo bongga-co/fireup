@@ -1,9 +1,14 @@
 package com.bambazu.fireup;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -68,6 +73,7 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
             createLocationRequest();
         }
         else{
+            Toast.makeText(this, getResources().getString(R.string.device_not_supported), Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -127,6 +133,12 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
             listPlaces.setAdapter(null);
             getPlaces("List", null);
         }
+        else if(id == R.id.action_share){
+            shareApp();
+        }
+        /*else if(id == R.id.action_contact){
+            contactTeam();
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -293,4 +305,46 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_get_location), Toast.LENGTH_SHORT);
         }
     }
+
+    private void shareApp(){
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_text));
+        send.setType("text/plain");
+
+        startActivity(Intent.createChooser(send, getResources().getString(R.string.share_chooser_title)));
+    }
+
+    /*private void contactTeam(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.dialog_text));
+        builder.setCancelable(true);
+        builder.setItems(new CharSequence[] {getResources().getString(R.string.dialog_suggestion), getResources().getString(R.string.dialog_bug)}, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String subject = "";
+                String body = "";
+
+                switch (which){
+                    case 0:
+                        subject = "Suggestion";
+                        break;
+
+                    case 1:
+                        subject = "Bug";
+                        body = "<p><strong>Device Model</strong> " + Build.MANUFACTURER.toUpperCase() + " " + Build.MODEL + "<br/><strong>OS Version</strong> ANDROID " + Build.VERSION.RELEASE + "</p>";
+                        break;
+                }
+
+                Intent email = new Intent(Intent.ACTION_SENDTO);
+                email.setType("text/html");
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{getResources().getString(R.string.support_email)});
+                email.putExtra(Intent.EXTRA_SUBJECT, subject);
+                email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(body));
+                email.setData(Uri.parse("mailto:"));
+
+                startActivity(Intent.createChooser(email, getResources().getString(R.string.contact_chooser_title)));
+            }
+        });
+        builder.show();
+    }*/
 }

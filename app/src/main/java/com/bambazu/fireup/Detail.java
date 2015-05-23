@@ -363,7 +363,7 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
         AlertDialog.Builder dialog = new AlertDialog.Builder(Detail.this);
         dialog.setTitle(getResources().getString(R.string.show_route_title));
         dialog.setMessage(getResources().getString(R.string.show_route_msg));
-        dialog.setPositiveButton("Take Me", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(getResources().getString(R.string.take_me), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                         Uri.parse("http://maps.google.com/maps?saddr="+Config.currentLatitude+","+Config.currentLongitude+"&daddr="+lat+","+lng+"&mode=driving"));
@@ -371,7 +371,7 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
             }
         });
 
-        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(getResources().getString(R.string.cancel_btn), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 dialog.dismiss();
             }
