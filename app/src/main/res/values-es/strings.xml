@@ -20,7 +20,7 @@
     <string name="error_get_places">No se pudo obtner los lugares.</string>
     <string name="error_get_location">No se pudo obtener la ubicaci\u00f3n del dispositivo.</string>
     <string name="device_not_supported">Este dispositivo no soporta Google Play Services</string>
-    <string name="share_text">Prueba FireUp!, la app donde podr\u00e1s encontrar los lugares de entretenimiento para adultos y vivir un momento placentero con tu pareja. \n\nNo olvides compartirla con tus amigos. \n\nhttps://play.google.com/store/apps/details?id=com.bambazu.fireup</string>
+    <string name="share_text">Prueba FireUp!, la app donde podr\u00e1s encontrar los lugares de entretenimiento para adultos y vivir un momento placentero con tu pareja. \n\nNo olvides compartirla con tus amigos. \n\nhttps://goo.gl/aiVTqy</string>
     <string name="share_chooser_title">Compartir FireUp</string>
 
     <!-- Map Activity -->
@@ -32,10 +32,12 @@
     <string name="sr_low_price">Precio M\u00ednimo</string>
     <string name="sr_high_price">Precio M\u00e1ximo</string>
     <string name="sr_text_city">Ciudad</string>
+    <string name="sr_text_category">Categor\u00eda</string>
     <string name="sr_text_rating">Valoraci\u00f3n</string>
     <string name="sr_text_distance">Distancia</string>
     <string name="bt_text_search">Buscar</string>
     <string name="first_city">Seleccione Ciudad</string>
+    <string name="first_category">Seleccione Categor\u00eda</string>
     <string name="action_reset">Limpiar Campos</string>
     <string name="error_search">Elegir por lo menos un campo de b\u00fasqueda.</string>
     <string name="error_search_exception">No se pudo realizar la b\u00fasqueda.</string>
@@ -49,6 +51,15 @@
         <item>La Estrella</item>
         <item>Medell\u00edn</item>
         <item>Sabaneta</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Seleccione Categor\u00eda</item>
+        <item>Motel</item>
+        <item>Tienda Er\u00f3tica</item>
+        <item>Centro de Masajes</item>
+        <item>Bar Gay</item>
+        <item>Bar Swinger</item>
     </string-array>
 
     <!-- Detail Activity -->
@@ -84,6 +95,8 @@
     <!-- Globals -->
     <string name="loader_message">Cargando...</string>
     <string name="error_network">No hay conexi\u00f3n a internet, revisa tu conexi\u00f3n e intenta e nuevo.</string>
+    <string name="error_location_services_title">Servicios de Ubicaci\u00f3n</string>
+    <string name="error_location_services">Por favor activa los Servicios de Ubicaci\u00f3n, revisa la configuraci\u00f3n de tu tel\u00e9fono e intenta de nuevo.</string>
     <string name="action_settings">Ajustes</string>
     <string name="title_activity_comment">Comentarios</string>
     <string name="title_activity_splash">Splash</string>

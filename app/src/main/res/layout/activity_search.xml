@@ -61,11 +61,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <!-- Category -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/sr_text_category"/>
+
+        <Spinner
+            android:id="@+id/sr_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <!-- Rating -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
             android:text="@string/sr_text_rating"/>
 

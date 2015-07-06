@@ -5,7 +5,7 @@
     <dimen name="list_places_space">10dp</dimen>
     <dimen name="places_image_height">300dp</dimen>
     <dimen name="place_icon_width">150dp</dimen>
-    <dimen name="place_icon_height">300dp</dimen>
+    <dimen name="place_icon_height">200dp</dimen>
     <dimen name="pager_height">250dp</dimen>
     <dimen name="map_place_height">150dp</dimen>
     <dimen name="place_panel_height">74dp</dimen>

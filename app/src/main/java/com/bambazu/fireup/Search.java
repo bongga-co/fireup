@@ -25,6 +25,7 @@ public class Search extends ActionBarActivity {
     private EditText lowPrice;
     private EditText highPrice;
     private Spinner cityName;
+    private Spinner placeCategory;
     private RatingBar ratingPlace;
     private SeekBar placeDistance;
     private TextView placeDistanceValue;
@@ -43,11 +44,17 @@ public class Search extends ActionBarActivity {
         lowPrice = (EditText) findViewById(R.id.sr_low_price);
         highPrice = (EditText) findViewById(R.id.sr_high_price);
         cityName = (Spinner) findViewById(R.id.sr_city);
+        placeCategory = (Spinner) findViewById(R.id.sr_category);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.cities, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cityName.setAdapter(adapter);
+
+        ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(this,
+                R.array.categories, android.R.layout.simple_spinner_item);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        placeCategory.setAdapter(categoryAdapter);
 
         ratingPlace = (RatingBar) findViewById(R.id.sr_rating);
         ratingPlace.setRating(0);
@@ -72,6 +79,7 @@ public class Search extends ActionBarActivity {
             public void onClick(View v) {
                 if(lowPrice.getText().toString().length() == 0 && highPrice.getText().toString().length() == 0
                         && cityName.getSelectedItemPosition() == 0
+                        && placeCategory.getSelectedItemPosition() == 0
                         && placeDistanceValue.getText().toString().equals("0") && ratingPlace.getRating() == 0.0) {
 
                     if(notifier == null){
@@ -85,21 +93,6 @@ public class Search extends ActionBarActivity {
                 searchFields = new JSONObject();
 
                 try{
-                    //Price
-                    /*if((lowPrice.getText().toString().length() > 0 && lowPrice.getText().toString().matches(validateNumber))
-                            && highPrice.getText().length() <= 0){
-                        searchFields.put("lowprice", Long.parseLong(lowPrice.getText().toString()));
-                    }
-                    else if((highPrice.getText().toString().length() > 0 && highPrice.getText().toString().matches(validateNumber))
-                            && lowPrice.getText().toString().length() <= 0){
-                        searchFields.put("highprice", Long.parseLong(highPrice.getText().toString()));
-                    }
-                    else if(lowPrice.getText().toString().length() > 0 && highPrice.getText().toString().length() > 0
-                            && lowPrice.getText().toString().matches(validateNumber) && highPrice.getText().toString().matches(validateNumber)){
-                        searchFields.put("lowprice", Long.parseLong(lowPrice.getText().toString()));
-                        searchFields.put("highprice", Long.parseLong(highPrice.getText().toString()));
-                    }*/
-
                     //Prices
                     if(lowPrice.getText().length() > 0){
                         searchFields.put("lowprice", Long.parseLong(lowPrice.getText().toString()));
@@ -121,6 +114,41 @@ public class Search extends ActionBarActivity {
                     }
                     else{
                         searchFields.put("city", "");
+                    }
+
+                    //Category
+                    if(!placeCategory.getSelectedItem().equals(getResources().getString(R.string.first_category))){
+                        String category = null;
+                        switch (placeCategory.getSelectedItem().toString()){
+                            case "Motel":
+                                category = "Motel";
+                                break;
+
+                            case "Sex Shop":
+                            case "Tienda Er\u00f3tica":
+                                category = "SexShop";
+                                break;
+
+                            case "Massage Center":
+                            case "Centro d Masajes":
+                                category = "MassageCenter";
+                                break;
+
+                            case "Gay Bar":
+                            case "Bar Gay":
+                                category = "GayBar";
+                                break;
+
+                            case "Swinger Bar":
+                            case "Bar Swinger":
+                                category = "SwingerBar";
+                                break;
+                        }
+
+                        searchFields.put("category", category);
+                    }
+                    else{
+                        searchFields.put("category", "");
                     }
 
                     //Rating

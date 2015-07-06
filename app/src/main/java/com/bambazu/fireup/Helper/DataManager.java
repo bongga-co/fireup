@@ -90,6 +90,11 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
                     query.whereEqualTo("city", searchData.getString("city"));
                 }
 
+                //Category
+                if(!searchData.getString("category").equals("")){
+                    query.whereEqualTo("category", searchData.getString("category"));
+                }
+
                 //Rating
                 if(searchData.getInt("rating") != 0){
                     query.whereEqualTo("ranking", searchData.getInt("rating"));

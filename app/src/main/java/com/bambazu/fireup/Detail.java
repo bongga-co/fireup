@@ -224,8 +224,8 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
             placeAvailableRooms.setText(placeData.getRooms() + " " + getResources().getString(R.string.available_rooms));
         }
 
-        placeLowPrice.setText(formatCurrency(placeData.getLowprice()));
-        placeHighPrice.setText(formatCurrency(placeData.getHighprice()));
+        placeLowPrice.setText(formatCurrency(placeData.getLowprice()) + " (COP)");
+        placeHighPrice.setText(formatCurrency(placeData.getHighprice()) + " (COP)");
 
         placeAddress.setText(placeData.getAddress());
         placePhone.setText(placeData.getPhone().toString().substring(3));

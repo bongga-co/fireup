@@ -20,7 +20,7 @@
     <string name="error_get_places">Unable to get places.</string>
     <string name="error_get_location">Unable to get the device location.</string>
     <string name="device_not_supported">This device do not support Google Play Services</string>
-    <string name="share_text">Try FireUp!, where you might find adult entertaiment places and enjoying the best moment with your couple. \n\nDon\'t forget share it with your friends.  \n\nhttps://play.google.com/store/apps/details?id=com.bambazu.fireup</string>
+    <string name="share_text">Try FireUp!, where you might find adult entertaiment places and enjoying the best moment with your couple. \n\nDon\'t forget share it with your friends.  \n\nhttps://goo.gl/aiVTqy</string>
     <string name="share_chooser_title">Share FireUp</string>
 
     <!-- Map Activity -->
@@ -32,10 +32,12 @@
     <string name="sr_low_price">Low Price</string>
     <string name="sr_high_price">High Price</string>
     <string name="sr_text_city">City</string>
+    <string name="sr_text_category">Category</string>
     <string name="sr_text_rating">Rating</string>
     <string name="sr_text_distance">Distance</string>
     <string name="bt_text_search">Search</string>
     <string name="first_city">Choose City</string>
+    <string name="first_category">Choose Category</string>
     <string name="action_reset">Reset Fields</string>
     <string name="error_search">Choose at least one search field</string>
     <string name="error_search_exception">Unable to perform the search.</string>
@@ -49,6 +51,15 @@
         <item>La Estrella</item>
         <item>Medell\u00edn</item>
         <item>Sabaneta</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Choose Category</item>
+        <item>Motel</item>
+        <item>Sex Shop</item>
+        <item>Massage Center</item>
+        <item>Gay Bar</item>
+        <item>Swinger Bar</item>
     </string-array>
 
     <!-- Detail Activity -->
@@ -84,6 +95,8 @@
     <!-- Globals -->
     <string name="loader_message">Loading...</string>
     <string name="error_network">No network connection, check your phone and try again.</string>
+    <string name="error_location_services_title">Location Services</string>
+    <string name="error_location_services">Please enable Location Services, check your phone settings and try again.</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_comment">Comment</string>
     <string name="title_activity_splash">Splash</string>

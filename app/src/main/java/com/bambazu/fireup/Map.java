@@ -66,7 +66,7 @@ public class Map extends ActionBarActivity {
             });
 
             if(Config.currentLatitude != 0.0 && Config.currentLongitude != 0.0){
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Config.currentLatitude, Config.currentLongitude), 13));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Config.currentLatitude, Config.currentLongitude), 11));
 
                 if(Config.currentPlaces != null){
                     map.clear();

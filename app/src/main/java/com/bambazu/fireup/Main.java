@@ -1,12 +1,15 @@
 package com.bambazu.fireup;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.util.Log;
@@ -93,6 +96,9 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
         if(googleApiClient.isConnected()){
             startLocationUpdates();
         }
+        else{
+            googleApiClient.connect();
+        }
     }
 
     @Override
@@ -158,7 +164,9 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
 
     @Override
     public void onConnected(Bundle bundle) {
-        startLocationUpdates();
+        //if(checkLocationSetting()){
+            startLocationUpdates();
+        //}
     }
 
     @Override
@@ -312,6 +320,30 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
         send.setType("text/plain");
 
         startActivity(Intent.createChooser(send, getResources().getString(R.string.share_chooser_title)));
+    }
+
+    private boolean checkLocationSetting(){
+        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.error_location_services_title));
+            builder.setMessage(getResources().getString(R.string.error_location_services));
+            builder.setPositiveButton(getResources().getString(R.string.ok_btn), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                }
+            });
+
+            final Dialog alertDialog = builder.create();
+            alertDialog.show();
+
+            return false;
+        }
+
+        return true;
     }
 
     /*private void contactTeam(){
