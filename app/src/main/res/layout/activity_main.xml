@@ -22,6 +22,8 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         android:textSize="18sp"
-        android:text="@string/empty_data" />
+        android:text="@string/empty_data"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 
 </RelativeLayout>
