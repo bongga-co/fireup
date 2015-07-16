@@ -19,8 +19,6 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class Search extends ActionBarActivity {
     private EditText lowPrice;
     private EditText highPrice;
@@ -33,7 +31,7 @@ public class Search extends ActionBarActivity {
 
     private Button btnSearch;
 
-    private String validateNumber = "^[^\\\\d]*";
+    //private String validateNumber = "^[^\\\\d]*";
     JSONObject searchFields;
 
     @Override
@@ -189,6 +187,7 @@ public class Search extends ActionBarActivity {
             lowPrice.setText(null);
             highPrice.setText(null);
             cityName.setSelection(0, true);
+            placeCategory.setSelection(0, true);
             ratingPlace.setRating(0);
             placeDistance.setProgress(0);
             placeDistanceValue.setText("0");

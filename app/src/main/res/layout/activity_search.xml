@@ -105,25 +105,31 @@
 
         <SeekBar
             android:id="@+id/sr_distance"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:max="10"
-            android:layout_weight="1"/>
+            android:max="10" />
 
         <TextView
             android:id="@+id/sr_distance_value"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="-20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="5dp"
             android:textSize="28sp"
             android:text="0"
-            android:textColor="@color/distance_value"
-            android:layout_weight="1"/>
+            android:textColor="@color/distance_value" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="18sp"
+            android:text="kms"
+            android:textColor="@color/distance_value" />
 
         </LinearLayout>
 

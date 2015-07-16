@@ -134,8 +134,13 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
             return true;
         }
         else if(id == R.id.action_places_my_location){
-            listPlaces.setAdapter(null);
-            getPlaces("List", null);
+            if(googleApiClient.isConnected()){
+                listPlaces.setAdapter(null);
+                getPlaces("List", null);
+            }
+            else{
+                googleApiClient.connect();
+            }
         }
         else if(id == R.id.action_share){
             shareApp();

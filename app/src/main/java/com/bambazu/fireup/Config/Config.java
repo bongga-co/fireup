@@ -32,6 +32,7 @@ public class Config extends Application {
     public static final int MIN_TIME = 0;
     public static final int MIN_DISTANCE = 0;
     public static ArrayList<Place> currentPlaces;
+    public static boolean isStartedInBackground = false;
 
     @Override
     public void onCreate() {
