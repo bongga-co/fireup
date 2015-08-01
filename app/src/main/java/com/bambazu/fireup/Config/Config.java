@@ -5,6 +5,8 @@ import android.app.Application;
 import com.bambazu.fireup.Helper.DistanceManager;
 import com.bambazu.fireup.Model.Place;
 import com.bambazu.fireup.R;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.parse.ParseObject;
 
 import org.apache.http.HttpEntity;
@@ -34,10 +36,21 @@ public class Config extends Application {
     public static ArrayList<Place> currentPlaces;
     public static boolean isStartedInBackground = false;
 
+    public static GoogleAnalytics analytics;
+    public static Tracker tracker;
+
     @Override
     public void onCreate() {
         super.onCreate();
         com.parse.Parse.initialize(this, "W8c7QBPJW1B2FBqCFwZPra6fHvIZcQncEl3USxBJ", "roS4gCRfShVZeQ8GDQgcrgOttWQ83tChFuYPLhqh");
+
+        analytics = GoogleAnalytics.getInstance(this);
+        analytics.setLocalDispatchPeriod(1800);
+
+        tracker = analytics.newTracker("UA-55361973-1");
+        tracker.enableExceptionReporting(true);
+        tracker.enableAdvertisingIdCollection(true);
+        tracker.enableAutoActivityTracking(true);
     }
 
     public static int setPlaceColor(String type){

@@ -22,6 +22,7 @@
     <string name="device_not_supported">This device do not support Google Play Services</string>
     <string name="share_text">Try FireUp!, where you might find adult entertaiment places and enjoying the best moment with your couple. \n\nDon\'t forget share it with your friends.  \n\nhttps://goo.gl/aiVTqy</string>
     <string name="share_chooser_title">Share FireUp</string>
+    <string name="getting_location">Getting location...</string>
 
     <!-- Map Activity -->
     <string name="places_size">Results</string>

@@ -51,7 +51,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         ImageView imgPlace = (ImageView) itemView.findViewById(R.id.place_image);
         AQuery asyncLoader = imgLoader.recycle(itemView);
-        asyncLoader.id(imgPlace).progress(R.drawable.ic_loader).image(place_image.get(position), true, true, 0, R.drawable.no_image_available, null, AQuery.FADE_IN);
+        asyncLoader.id(imgPlace).progress(R.drawable.ic_loader).image(place_image.get(position), true, true, 0, R.drawable.no_image_available, null, AQuery.FADE_IN_FILE);
 
         ((ViewPager) container).addView(itemView);
 

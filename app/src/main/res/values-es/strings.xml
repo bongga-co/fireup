@@ -22,6 +22,7 @@
     <string name="device_not_supported">Este dispositivo no soporta Google Play Services</string>
     <string name="share_text">Prueba FireUp!, la app donde podr\u00e1s encontrar los lugares de entretenimiento para adultos y vivir un momento placentero con tu pareja. \n\nNo olvides compartirla con tus amigos. \n\nhttps://goo.gl/aiVTqy</string>
     <string name="share_chooser_title">Compartir FireUp</string>
+    <string name="getting_location">Obteniendo ubicaci\u00f3n...</string>
 
     <!-- Map Activity -->
     <string name="places_size">Resultados</string>

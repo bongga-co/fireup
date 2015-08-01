@@ -29,6 +29,7 @@ import com.bambazu.fireup.Helper.NetworkManager;
 import com.bambazu.fireup.Interfaz.CalculateDistanceListener;
 import com.bambazu.fireup.Model.Place;
 import com.bambazu.fireup.Model.Service;
+import com.google.android.gms.analytics.HitBuilders;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -77,6 +78,8 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        Config.tracker.setScreenName(this.getClass().toString());
 
         networkManager = new NetworkManager(this);
 
@@ -270,6 +273,12 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
+
+        Config.tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Detail UI")
+                .setAction("Click")
+                .setLabel("Show Description")
+                .build());
     }
 
     private String formatCurrency(Number price){
@@ -333,12 +342,20 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
                         AlertDialog alertDialog = dialog.create();
                         alertDialog.show();
-                    } else {
+
+                        Config.tracker.send(new HitBuilders.EventBuilder()
+                                .setCategory("Detail UI")
+                                .setAction("Click")
+                                .setLabel("Show Services")
+                                .build());
+                    }
+                    else {
                         gridServices.setEnabled(true);
                         gridServices.setText(getResources().getString(R.string.btn_show_services));
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_services_available), Toast.LENGTH_SHORT).show();
                     }
-                } else {
+                }
+                else {
                     gridServices.setEnabled(true);
                     gridServices.setText(getResources().getString(R.string.btn_show_services));
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_services), Toast.LENGTH_SHORT).show();
@@ -351,6 +368,12 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + phone));
         startActivity(intent);
+
+        Config.tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Detail UI")
+                .setAction("Click")
+                .setLabel("Call Place")
+                .build());
     }
 
     private void openComments(){
@@ -379,5 +402,11 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
+
+        Config.tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Detail UI")
+                .setAction("Click")
+                .setLabel("Show Route")
+                .build());
     }
 }

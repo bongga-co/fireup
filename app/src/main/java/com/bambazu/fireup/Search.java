@@ -16,6 +16,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bambazu.fireup.Config.Config;
+import com.google.android.gms.analytics.HitBuilders;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,6 +41,8 @@ public class Search extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        Config.tracker.setScreenName(this.getClass().toString());
 
         lowPrice = (EditText) findViewById(R.id.sr_low_price);
         highPrice = (EditText) findViewById(R.id.sr_high_price);
@@ -157,6 +162,12 @@ public class Search extends ActionBarActivity {
                     Intent intent = new Intent();
                     intent.putExtra("searchResult", searchFields.toString());
                     setResult(RESULT_OK, intent);
+
+                    Config.tracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Search UI")
+                            .setAction("Click")
+                            .setLabel("Perform Search - Fields: {" + searchFields.toString() + "}")
+                            .build());
                 }
                 catch (JSONException e){
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_search_exception), Toast.LENGTH_SHORT).show();

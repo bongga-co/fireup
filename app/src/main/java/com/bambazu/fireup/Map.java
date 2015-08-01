@@ -28,6 +28,8 @@ public class Map extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        Config.tracker.setScreenName(this.getClass().toString());
+
         idMarker = new HashMap<Marker, String[]>();
         setUpMap();
     }

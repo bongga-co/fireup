@@ -2,6 +2,7 @@ package com.bambazu.fireup;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import com.bambazu.fireup.Helper.DataManager;
 import com.bambazu.fireup.Helper.NetworkManager;
 import com.bambazu.fireup.Interfaz.DataListener;
 import com.bambazu.fireup.Model.Place;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -62,17 +64,24 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
     private DataManager dataManager;
     private NetworkManager networkManager;
 
+    private ProgressDialog loader = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         networkManager = new NetworkManager(this);
+        loader = new ProgressDialog(this);
+        loader.setCancelable(false);
+        loader.setMessage(getResources().getString(R.string.getting_location));
 
         listPlaces = (ListView) findViewById(R.id.listPlaces);
         listPlaces.setEmptyView(findViewById(android.R.id.empty));
 
         if(checkPlayServices()){
+            loader.show();
+
             buildGoogleApiClient();
             createLocationRequest();
         }
@@ -179,6 +188,10 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
 
     @Override
     public void onLocationChanged(Location location) {
+        if(loader != null){
+            loader.dismiss();
+        }
+
         lastLocation = location;
         getPlaces("List", null);
     }
@@ -323,6 +336,12 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
         send.setType("text/plain");
 
         startActivity(Intent.createChooser(send, getResources().getString(R.string.share_chooser_title)));
+
+        Config.tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Main UI")
+                .setAction("Click")
+                .setLabel("Sharing the App")
+                .build());
     }
 
     private boolean checkLocationSetting(){
