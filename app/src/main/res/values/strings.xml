@@ -89,8 +89,8 @@
     <string name="label_comment">Comments</string>
     <string name="ok_btn">OK</string>
     <string name="cancel_btn">Cancel</string>
-    <string name="comment_dialog_title">Insert Comment</string>
-    <string name="comment_dialog_desc">Insert a comment about place</string>
+    <string name="comment_dialog_title">Insert a Comment</string>
+    <string name="comment_dialog_desc">Insert a comment about the place</string>
     <string name="action_call">Call</string>
     <string name="action_comments">Comments</string>
     <string name="btn_show_services">Show Services</string>
@@ -118,7 +118,11 @@
     <string name="title_activity_splash">Splash</string>
     <string name="facebook_app_id">1606340736301392</string>
     <string name="title_activity_login">Login</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="action_add_comment">Comment</string>
+    <string name="comment_rating_title">Rating</string>
+    <string name="comment_error_post">Enter a comment</string>
+    <string name="comment_error_rating">Choose a rating value</string>
+    <string name="comment_success">Comment added successfully</string>
+    <string name="comment_submit_error">Unable to save the new comment</string>
 
 </resources>

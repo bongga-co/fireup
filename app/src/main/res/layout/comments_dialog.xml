@@ -11,19 +11,37 @@
         android:layout_height="wrap_content"
         android:text="@string/comment_dialog_title"
         android:textSize="20dp"
-        android:layout_marginBottom="3dp"
-        android:textColor="@color/dialog_box_text_color"/>
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/dialog_box_text_color" />
 
     <EditText
         android:id="@+id/place_comment_box"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:hint="@string/comment_dialog_desc"
         android:background="@color/dialog_box_bg"
+        android:textColor="@color/description_dialog_text"
         android:padding="5dp">
-
         <requestFocus />
-
     </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comment_rating_title"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/dialog_box_text_color"
+        android:layout_gravity="center_horizontal"/>
+
+    <RatingBar
+        android:id="@+id/comment_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:rating="0"
+        android:isIndicator="false"
+        android:layout_gravity="center_horizontal"
+        style="@style/heartRatingBar"/>
 
 </LinearLayout>

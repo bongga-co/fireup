@@ -117,5 +117,11 @@
     <string name="title_activity_comment">Comentarios</string>
     <string name="title_activity_splash">Splash</string>
     <string name="facebook_app_id">1606340736301392</string>
+    <string name="action_add_comment">Comentar</string>
+    <string name="comment_rating_title">Calificaci\u00f3n</string>
+    <string name="comment_error_post">Ingrese un comentario</string>
+    <string name="comment_error_rating">Escoja una calificaci\u00f3n</string>
+    <string name="comment_success">Comentario agregado con \u00e9xito</string>
+    <string name="comment_submit_error">No se pudo guardar el comentario</string>
 
 </resources>

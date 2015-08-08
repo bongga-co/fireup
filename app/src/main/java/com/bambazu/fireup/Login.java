@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bambazu.fireup.Config.Config;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -112,7 +113,7 @@ public class Login extends ActionBarActivity implements View.OnClickListener {
     private void onLogin(){
         dialog.show();
 
-        List<String> permissions = Arrays.asList("public_profile", "email");
+        List<String> permissions = Arrays.asList("email", "public_profile");
         ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException err) {
@@ -122,12 +123,24 @@ public class Login extends ActionBarActivity implements View.OnClickListener {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_login_facebook), Toast.LENGTH_SHORT).show();
                 }
                 else if (user.isNew()) {
-                    startActivity(new Intent(Login.this, Main.class));
-                    finish();
+                    if(Config.comingComment){
+                        Config.comingComment = false;
+                        finish();
+                    }
+                    else{
+                        startActivity(new Intent(Login.this, Main.class));
+                        finish();
+                    }
                 }
                 else {
-                    startActivity(new Intent(Login.this, Main.class));
-                    finish();
+                    if(Config.comingComment){
+                        Config.comingComment = false;
+                        finish();
+                    }
+                    else{
+                        startActivity(new Intent(Login.this, Main.class));
+                        finish();
+                    }
                 }
             }
         });

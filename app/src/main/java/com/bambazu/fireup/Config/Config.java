@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.util.Base64;
+import android.util.Log;
 
 import com.bambazu.fireup.Helper.DistanceManager;
 import com.bambazu.fireup.Model.Place;
@@ -40,6 +42,8 @@ public class Config extends Application {
 
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
+
+    public static boolean comingComment = false;
 
     @Override
     public void onCreate() {
@@ -87,6 +91,7 @@ public class Config extends Application {
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
+                //Log.i("Key Hash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
         }
         catch (PackageManager.NameNotFoundException e) {}
