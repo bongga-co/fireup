@@ -1,7 +1,6 @@
 package com.bambazu.fireup;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,7 +13,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -154,9 +152,9 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
         else if(id == R.id.action_share){
             shareApp();
         }
-        /*else if(id == R.id.action_contact){
+        else if(id == R.id.action_contact){
             contactTeam();
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -316,7 +314,7 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
             return;
         }
 
-        //lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if(lastLocation != null){
             Config.currentLatitude = lastLocation.getLatitude();
             Config.currentLongitude = lastLocation.getLongitude();
@@ -388,7 +386,7 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
         builder.create().show();
     }
 
-    /*private void contactTeam(){
+    private void contactTeam(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getResources().getString(R.string.dialog_text));
         builder.setCancelable(true);
@@ -420,5 +418,5 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
             }
         });
         builder.show();
-    }*/
+    }
 }

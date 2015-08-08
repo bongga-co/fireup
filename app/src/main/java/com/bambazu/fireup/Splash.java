@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
+
 
 public class Splash extends ActionBarActivity {
     private static int SPLASH_TIMER = 3000;
@@ -20,7 +23,15 @@ public class Splash extends ActionBarActivity {
 
             @Override
             public void run() {
-                startActivity(new Intent(Splash.this, Main.class));
+                ParseUser currentUser = ParseUser.getCurrentUser();
+
+                if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
+                    startActivity(new Intent(Splash.this, Main.class));
+                }
+                else{
+                    startActivity(new Intent(Splash.this, Login.class));
+                }
+
                 finish();
             }
         }, SPLASH_TIMER);

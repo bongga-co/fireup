@@ -8,6 +8,16 @@
     <string name="title_activity_search">Search</string>
     <string name="title_activity_detail">Detail</string>
 
+    <!-- Login Activity -->
+    <string name="login_username">Email</string>
+    <string name="login_password">Password</string>
+    <string name="btn_login_text">LogIn</string>
+    <string name="btn_signup_text">SingUp</string>
+    <string name="btn_forgot_text">Forgot Password</string>
+    <string name="btn_facebook_text">Login with Facebook</string>
+    <string name="btn_skip">Skip</string>
+    <string name="error_login_facebook">Unable to get the user information</string>
+
     <!-- Main Activity -->
     <string name="action_places_map">Map</string>
     <string name="action_search">Search</string>
@@ -23,6 +33,11 @@
     <string name="share_text">Try FireUp!, where you might find adult entertaiment places and enjoying the best moment with your couple. \n\nDon\'t forget share it with your friends.  \n\nhttps://goo.gl/aiVTqy</string>
     <string name="share_chooser_title">Share FireUp</string>
     <string name="getting_location">Getting location...</string>
+    <string name="dialog_text">Choose an Option</string>
+    <string name="dialog_suggestion">Make a Suggestion</string>
+    <string name="dialog_bug">Report a Bug</string>
+    <string name="support_email">fireup.entertainment@gmail.com</string>
+    <string name="contact_chooser_title">Choose a Mailbox</string>
 
     <!-- Map Activity -->
     <string name="places_size">Results</string>
@@ -101,5 +116,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_comment">Comment</string>
     <string name="title_activity_splash">Splash</string>
+    <string name="facebook_app_id">1606340736301392</string>
+    <string name="title_activity_login">Login</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

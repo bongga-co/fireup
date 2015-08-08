@@ -1,17 +1,22 @@
 package com.bambazu.fireup;
 
+import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.bambazu.fireup.Config.Config;
 import com.parse.GetCallback;
+import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class Comment extends ActionBarActivity {
     private ListView listComment;
@@ -29,6 +34,8 @@ public class Comment extends ActionBarActivity {
         if(extras != null) {
             getComments((String)extras.get("objectId"));
         }
+
+        onLogin();
     }
 
     @Override
@@ -62,5 +69,10 @@ public class Comment extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    private void onLogin(){
+        ParseUser user = ParseUser.getCurrentUser();
+        Toast.makeText(this, user.getUsername().toString(), Toast.LENGTH_LONG).show();
     }
 }

@@ -1,12 +1,16 @@
 package com.bambazu.fireup.Config;
 
 import android.app.Application;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 
 import com.bambazu.fireup.Helper.DistanceManager;
 import com.bambazu.fireup.Model.Place;
 import com.bambazu.fireup.R;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 
 import org.apache.http.HttpEntity;
@@ -21,6 +25,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,11 +36,7 @@ import java.util.HashMap;
 public class Config extends Application {
     public static double currentLatitude = 0.0;
     public static double currentLongitude = 0.0;
-    public static double distance = 0.0;
-    public static final int MIN_TIME = 0;
-    public static final int MIN_DISTANCE = 0;
     public static ArrayList<Place> currentPlaces;
-    public static boolean isStartedInBackground = false;
 
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
@@ -43,11 +45,13 @@ public class Config extends Application {
     public void onCreate() {
         super.onCreate();
         com.parse.Parse.initialize(this, "W8c7QBPJW1B2FBqCFwZPra6fHvIZcQncEl3USxBJ", "roS4gCRfShVZeQ8GDQgcrgOttWQ83tChFuYPLhqh");
+        ParseFacebookUtils.initialize(getResources().getString(R.string.facebook_app_id));
+        printHashKey();
 
         analytics = GoogleAnalytics.getInstance(this);
         analytics.setLocalDispatchPeriod(1800);
 
-        tracker = analytics.newTracker("UA-55361973-1");
+        tracker = analytics.newTracker("UA-55361973-3");
         tracker.enableExceptionReporting(true);
         tracker.enableAdvertisingIdCollection(true);
         tracker.enableAutoActivityTracking(true);
@@ -75,26 +79,17 @@ public class Config extends Application {
         return color;
     }
 
-    public static double getDistance(double sourceLatitude, double sourceLongitude, double destinationLatitude, double destinationLongitude){
-        /*double theta = Math.abs(sourceLongitude - destinationLongitude);
-        double dist = Math.sin(deg2rad(sourceLatitude)) * Math.sin(deg2rad(destinationLatitude)) + Math.cos(deg2rad(sourceLatitude)) * Math.cos(deg2rad(destinationLatitude)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-
-        return Math.floor(dist * 100.0) / 100.0;*/
-
-        float [] dist = new float[1];
-        android.location.Location.distanceBetween(sourceLatitude, sourceLongitude, destinationLatitude, destinationLongitude, dist);
-
-        return Math.round(dist[0] * 0.000621371192f);
-    }
-
-    private static double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    private static double rad2deg(double rad) {
-        return (rad * 180.0 / Math.PI);
+    public void printHashKey(){
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.bambazu.fireup",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+            }
+        }
+        catch (PackageManager.NameNotFoundException e) {}
+        catch (NoSuchAlgorithmException e) {}
     }
 }
