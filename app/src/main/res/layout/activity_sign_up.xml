@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/signup_email"
         android:textColor="@color/btn_search_title_color"
+        android:textColorHint="@color/btn_search_title_color"
         android:layout_marginTop="40dp"/>
 
     <EditText
@@ -20,7 +21,9 @@
         android:layout_height="wrap_content"
         android:hint="@string/signup_username"
         android:textColor="@color/btn_search_title_color"
+        android:textColorHint="@color/btn_search_title_color"
         android:layout_marginTop="10dp"
+        android:digits="abcdefghijklmnopqrstuvwxyz1234567890_-.ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:layout_below="@+id/signup_email"/>
 
     <EditText
@@ -29,6 +32,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/signup_password"
         android:textColor="@color/btn_search_title_color"
+        android:textColorHint="@color/btn_search_title_color"
         android:layout_marginTop="10dp"
         android:password="true"
         android:layout_below="@+id/signup_username"/>
@@ -41,6 +45,7 @@
         android:password="true"
         android:layout_marginTop="10dp"
         android:textColor="@color/btn_search_title_color"
+        android:textColorHint="@color/btn_search_title_color"
         android:layout_below="@+id/signup_password"/>
 
     <Button

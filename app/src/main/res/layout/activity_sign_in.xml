@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/login_username"
+        android:digits="abcdefghijklmnopqrstuvwxyz1234567890_-.ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:textColor="@color/btn_search_title_color"
+        android:textColorHint="@color/btn_search_title_color"
         android:layout_marginTop="40dp"/>
 
     <EditText
@@ -20,6 +22,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/login_password"
         android:textColor="@color/btn_search_title_color"
+        android:textColorHint="@color/btn_search_title_color"
         android:layout_marginTop="10dp"
         android:password="true"
         android:layout_below="@+id/login_email"/>

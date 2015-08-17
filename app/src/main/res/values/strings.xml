@@ -14,7 +14,7 @@
     <string name="title_activity_forgot">Forgot</string>
 
     <!-- Login Activity -->
-    <string name="login_username">Email</string>
+    <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="btn_login_text">LogIn</string>
     <string name="btn_signup_text">SingUp</string>
@@ -22,13 +22,14 @@
     <string name="btn_facebook_text">Login with Facebook</string>
     <string name="btn_skip">Skip</string>
     <string name="error_login_facebook">Unable to get the user information</string>
+    <string name="error_msg_login">Failed to log in, try again later</string>
 
     <!-- Main Activity -->
     <string name="action_places_map">Map</string>
     <string name="action_search">Search</string>
     <string name="action_share">Share FireUp</string>
     <string name="action_contact">Contact Us</string>
-    <string name="action_logout">Close Session</string>
+    <string name="action_logout">Logout</string>
     <string name="action_places_my_location">Nearby Places</string>
     <string name="empty_data">Oops! Something went wrong or there are no nearby places.</string>
     <string name="available_rooms"> available rooms</string>
@@ -131,6 +132,7 @@
     <string name="currency_type">Colombian Pesos</string>
     <string name="msg_login">Find the best adult entertainment places nearby</string>
     <string name="terms">We do not publish anything on Facebook without your express authorization, only you need your information to comment.</string>
+    <string name="error_logout">Failed to log out, try again later</string>
 
     <!-- SignUp Activity -->
     <string name="signup_email">Email</string>
@@ -138,6 +140,15 @@
     <string name="signup_password">Password</string>
     <string name="verify_password">Verify Password</string>
 
+    <string name="error_email_signup">email not entered or invalid format</string>
+    <string name="error_username_signup">Enter username</string>
+    <string name="error_password_length_signup">Password must be at least 6 characters</string>
+    <string name="error_password_signup">Enter password</string>
+    <string name="error_password_match_signup">The password does not match</string>
+    <string name="error_msg_signup">Failed to register, try again later</string>
+
     <!-- Forgot Activity -->
     <string name="btn_forgot_send">Send</string>
+    <string name="error_msg_forgot">Failed to send email, try again later</string>
+    <string name="success_msg_forgot">An email was successfully sent with reset instructions.</string>
 </resources>

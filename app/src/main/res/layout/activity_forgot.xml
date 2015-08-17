@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/signup_email"
         android:textColor="@color/btn_search_title_color"
+        android:textColorHint="@color/btn_search_title_color"
         android:layout_marginTop="40dp"/>
 
     <Button

@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bambazu.fireup.Adapter.PlaceAdapter;
 import com.bambazu.fireup.Config.Config;
 import com.bambazu.fireup.Helper.DataManager;
+import com.bambazu.fireup.Helper.LocalDataManager;
 import com.bambazu.fireup.Helper.NetworkManager;
 import com.bambazu.fireup.Interfaz.DataListener;
 import com.bambazu.fireup.Model.Place;
@@ -35,7 +36,11 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.parse.LogOutCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -159,6 +164,9 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
         }
         else if(id == R.id.action_contact){
             contactTeam();
+        }
+        else if(id == R.id.action_logout){
+            onLogout();
         }
 
         return super.onOptionsItemSelected(item);
@@ -431,5 +439,23 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
         if(loader != null){
             loader.dismiss();
         }
+    }
+
+    private void onLogout(){
+        ParseUser.logOutInBackground(new LogOutCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null){
+                    LocalDataManager localDataManager = new LocalDataManager(getApplicationContext());
+                    localDataManager.deleteLocalData(null);
+
+                    startActivity(new Intent(Main.this, Login.class));
+                    finish();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_logout), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

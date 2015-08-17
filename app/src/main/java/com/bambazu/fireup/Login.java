@@ -12,10 +12,14 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import com.bambazu.fireup.Config.Config;
 import com.bambazu.fireup.Helper.LocalDataManager;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
+import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.List;
 
@@ -136,11 +140,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 if (user == null) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_login_facebook), Toast.LENGTH_SHORT).show();
-                } else if (user.isNew()) {
+                }
+                else if (user.isNew()) {
                     if (Config.comingComment) {
                         Config.comingComment = false;
                         finish();
-                    } else {
+                    }
+                    else {
+                        showFbUsername();
                         startActivity(new Intent(Login.this, Main.class));
                         finish();
                     }
@@ -151,11 +158,28 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         finish();
                     }
                     else {
+                        showFbUsername();
                         startActivity(new Intent(Login.this, Main.class));
                         finish();
                     }
                 }
             }
         });
+    }
+
+    private void showFbUsername(){
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                ParseUser.getCurrentUser().setUsername(object.optString("first_name"));
+                ParseUser.getCurrentUser().setEmail(object.optString("email"));
+                ParseUser.getCurrentUser().saveEventually();
+            }
+        });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "first_name, email");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 }

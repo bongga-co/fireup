@@ -95,6 +95,7 @@ public class Comment extends AppCompatActivity {
         query.include("idUser");
         query.include("idPlace");
         query.whereEqualTo("idPlace", idPlace);
+        query.addDescendingOrder("createdAt");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -133,9 +134,6 @@ public class Comment extends AppCompatActivity {
                 ParseUser user = ParseUser.getCurrentUser();
                 if(user != null && !user.getUsername().equals("")){
                     doComment(post, rating);
-
-                    data.add(0, new Comments(ParseUser.getCurrentUser().getUsername(), Config.formattedDate(new Date()), post.toString(), (int)rating.getRating()));
-                    commentAdapter.notifyDataSetChanged();
                 }
                 else{
                     Config.comingComment = true;
@@ -170,6 +168,9 @@ public class Comment extends AppCompatActivity {
             return;
         }
 
+        data.add(0, new Comments(ParseUser.getCurrentUser().getUsername(), Config.formattedDate(new Date()), post.getText().toString(), (int)rating.getRating()));
+        commentAdapter.notifyDataSetChanged();
+
         final ParseObject newComment = new ParseObject("Comments");
         newComment.put("idUser", ParseUser.getCurrentUser());
         newComment.put("idPlace", ParseObject.createWithoutData("Places", objectId));
@@ -179,7 +180,6 @@ public class Comment extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if(e == null){
-                    Toast.makeText(Comment.this, getResources().getString(R.string.comment_success), Toast.LENGTH_SHORT).show();
                     Config.tracker.send(new HitBuilders.EventBuilder()
                             .setCategory("Comment UI")
                             .setAction("Submit")

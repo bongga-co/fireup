@@ -15,7 +15,7 @@
     <string name="title_activity_sign_in">Inicio de Sesi\u00f3n</string>
 
     <!-- Login Activity -->
-    <string name="login_username">Correo Electr\u00f3nico</string>
+    <string name="login_username">Usuario</string>
     <string name="login_password">Contrase\u00f1a</string>
     <string name="btn_login_text">Iniciar Sesi\u00f3n</string>
     <string name="btn_signup_text">Registrarse</string>
@@ -23,6 +23,7 @@
     <string name="btn_facebook_text">Iniciar con Facebook</string>
     <string name="btn_skip">Omitir</string>
     <string name="error_login_facebook">No se pudo obtener la informaci\u00f3n del usuario</string>
+    <string name="error_msg_login">No se pudo iniciar la sesi\u00f3n del usuario, intente m\u00e1s tarde</string>
 
     <!-- Main Activity -->
     <string name="action_places_map">Mapa</string>
@@ -132,6 +133,7 @@
     <string name="currency_type">Pesos Colombianos</string>
     <string name="msg_login">Encuentra los mejores lugares de entretenimiento adulto m\u00e1s cerca de ti</string>
     <string name="terms">No publicamos nada en Facebook sin tu autorizaci\u00f3n expl\u00edcita, s\u00f3lo necesitas tus datos para comentar.</string>
+    <string name="error_logout">Error al desloguear, intente m\u00e1s tarde</string>
 
     <!-- SignUp Activity -->
     <string name="signup_email">Correo Electr\u00f3nico</string>
@@ -139,7 +141,16 @@
     <string name="signup_password">Contrase\u00f1a</string>
     <string name="verify_password">Confirmar Contrase\u00f1a</string>
 
+    <string name="error_email_signup">Correo electr\u00f3nico no establecido o formato inv\u00e1lido</string>
+    <string name="error_username_signup">Ingrese nombre de usuario</string>
+    <string name="error_password_length_signup">La contrase\u00f1a debe ser mayor de 6 caracteres</string>
+    <string name="error_password_signup">Ingrese contrase\u00f1a</string>
+    <string name="error_password_match_signup">La contrase\u00f1a no coincide</string>
+    <string name="error_msg_signup">No se pudo realizar el registro, intente m\u00e1s tarde</string>
+
     <!-- Forgot Activity -->
     <string name="btn_forgot_send">Enviar</string>
+    <string name="error_msg_forgot">No se pudo enviar el correo electr\u00f3nico, intente m\u00e1s tarde</string>
+    <string name="success_msg_forgot">Te hemos enviado un correo electr\u00f3nico, sigue las instrucciones par reiniciar tu contrase\u00f1a</string>
 
 </resources>
