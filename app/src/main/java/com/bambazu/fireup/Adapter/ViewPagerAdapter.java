@@ -5,6 +5,8 @@ package com.bambazu.fireup.Adapter;
  */
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -25,6 +27,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     int totalImages;
     LayoutInflater inflater;
     private AQuery imgLoader;
+    private Bitmap loader;
 
     public ViewPagerAdapter(Context context, ArrayList<String> place_image, int totalImages) {
         this.context = context;
@@ -32,6 +35,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         this.totalImages = totalImages;
 
         imgLoader = new AQuery(context);
+        loader = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_loader);
     }
 
     @Override
@@ -51,7 +55,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         ImageView imgPlace = (ImageView) itemView.findViewById(R.id.place_image);
         AQuery asyncLoader = imgLoader.recycle(itemView);
-        asyncLoader.id(imgPlace).progress(R.drawable.ic_loader).image(place_image.get(position), true, true, 0, R.drawable.no_image_available, null, AQuery.FADE_IN_FILE);
+        asyncLoader.id(imgPlace).image(place_image.get(position), true, true, 0, 0, loader, 0, 1.0f);
 
         ((ViewPager) container).addView(itemView);
 

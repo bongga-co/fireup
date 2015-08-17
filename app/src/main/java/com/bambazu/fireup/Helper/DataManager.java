@@ -3,22 +3,17 @@ package com.bambazu.fireup.Helper;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
-
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import com.bambazu.fireup.Config.Config;
 import com.bambazu.fireup.R;
 import com.bambazu.fireup.Interfaz.DataListener;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,7 +55,7 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(objectType);
 
         if(queryType.equals("List")){
-            query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), 3);
+            query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), 5);
 
             try{
                 responseObject = query.find();
@@ -104,15 +99,15 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
                 if(searchData.getInt("distance") != 0){
                     query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), searchData.getInt("distance"));
                 }
+
+                try{
+                    responseObject = query.find();
+                }
+                catch (ParseException e){
+                    Toast.makeText(context, context.getResources().getString(R.string.error_get_places), Toast.LENGTH_SHORT).show();
+                }
             }
             catch (JSONException e){
-                Toast.makeText(context, context.getResources().getString(R.string.error_get_places), Toast.LENGTH_SHORT).show();
-            }
-
-            try{
-                responseObject = query.find();
-            }
-            catch (ParseException e){
                 Toast.makeText(context, context.getResources().getString(R.string.error_get_places), Toast.LENGTH_SHORT).show();
             }
         }

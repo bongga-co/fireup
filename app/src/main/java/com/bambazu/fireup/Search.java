@@ -2,8 +2,8 @@ package com.bambazu.fireup;
 
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,14 +15,12 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bambazu.fireup.Config.Config;
 import com.google.android.gms.analytics.HitBuilders;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Search extends ActionBarActivity {
+public class Search extends AppCompatActivity {
     private EditText lowPrice;
     private EditText highPrice;
     private Spinner cityName;
@@ -31,10 +29,7 @@ public class Search extends ActionBarActivity {
     private SeekBar placeDistance;
     private TextView placeDistanceValue;
     private Toast notifier;
-
     private Button btnSearch;
-
-    //private String validateNumber = "^[^\\\\d]*";
     JSONObject searchFields;
 
     @Override

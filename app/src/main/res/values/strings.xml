@@ -7,6 +7,11 @@
     <string name="title_activity_map">Map</string>
     <string name="title_activity_search">Search</string>
     <string name="title_activity_detail">Detail</string>
+    <string name="title_activity_sign_up">SignUp</string>
+    <string name="title_activity_comment">Comment</string>
+    <string name="title_activity_splash">@string/app_name</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_forgot">Forgot</string>
 
     <!-- Login Activity -->
     <string name="login_username">Email</string>
@@ -114,15 +119,25 @@
     <string name="error_location_services_title">Location Services</string>
     <string name="error_location_services">Please enable Location Services, check your phone settings and try again.</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_comment">Comment</string>
-    <string name="title_activity_splash">Splash</string>
     <string name="facebook_app_id">1606340736301392</string>
-    <string name="title_activity_login">Login</string>
     <string name="action_add_comment">Comment</string>
     <string name="comment_rating_title">Rating</string>
     <string name="comment_error_post">Enter a comment</string>
     <string name="comment_error_rating">Choose a rating value</string>
     <string name="comment_success">Comment added successfully</string>
     <string name="comment_submit_error">Unable to save the new comment</string>
+    <string name="error_comment_data">Unable to get comments</string>
+    <string name="comments_empty">No available comments for this place</string>
+    <string name="currency_type">Colombian Pesos</string>
+    <string name="msg_login">Find the best adult entertainment places nearby</string>
+    <string name="terms">We do not publish anything on Facebook without your express authorization, only you need your information to comment.</string>
 
+    <!-- SignUp Activity -->
+    <string name="signup_email">Email</string>
+    <string name="signup_username">Username</string>
+    <string name="signup_password">Password</string>
+    <string name="verify_password">Verify Password</string>
+
+    <!-- Forgot Activity -->
+    <string name="btn_forgot_send">Send</string>
 </resources>

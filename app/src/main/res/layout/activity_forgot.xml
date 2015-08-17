@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/login_margin"
+    android:background="@drawable/bg"
+    tools:context="com.bambazu.fireup.Forgot">
+
+    <EditText
+        android:id="@+id/forgot_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signup_email"
+        android:textColor="@color/btn_search_title_color"
+        android:layout_marginTop="40dp"/>
+
+    <Button
+        android:id="@+id/btn_forgot_send"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/btn_forgot_send"
+        android:textColor="@color/btn_search_title_color"
+        android:background="@color/btn_show_more_desc"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/forgot_email"/>
+
+</RelativeLayout>

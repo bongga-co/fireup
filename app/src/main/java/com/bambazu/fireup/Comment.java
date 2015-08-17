@@ -1,12 +1,13 @@
 package com.bambazu.fireup;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,23 +15,28 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
+import com.bambazu.fireup.Adapter.CommentsAdapter;
 import com.bambazu.fireup.Config.Config;
+import com.bambazu.fireup.Model.Comments;
 import com.google.android.gms.analytics.HitBuilders;
-import com.parse.GetCallback;
-import com.parse.LogInCallback;
+import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-public class Comment extends ActionBarActivity {
+public class Comment extends AppCompatActivity {
     private ListView listComment;
     private String objectId;
+    private CommentsAdapter commentAdapter;
+    private ArrayList<Comments> data;
+    private ProgressDialog loader;
+    private FloatingActionButton btnComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +45,19 @@ public class Comment extends ActionBarActivity {
 
         Config.tracker.setScreenName(this.getClass().toString());
 
+        loader = new ProgressDialog(this);
+        loader.setMessage(getResources().getString(R.string.loader_message));
+        loader.setCancelable(false);
+
         listComment = (ListView)findViewById(R.id.listComment);
+        listComment.setEmptyView(findViewById(R.id.comments_empty));
+        btnComment = (FloatingActionButton) findViewById(R.id.fab);
+        btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCommentBox();
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
@@ -51,7 +69,7 @@ public class Comment extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_comment, menu);
-        return true;
+        return false;
     }
 
     @Override
@@ -70,12 +88,31 @@ public class Comment extends ActionBarActivity {
     }
 
     private void getComments(String objectId){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Places");
-        query.getInBackground(objectId, new GetCallback<ParseObject>() {
-            public void done(ParseObject place, ParseException e) {
+        loader.show();
+
+        ParseObject idPlace = ParseObject.createWithoutData("Places", objectId);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Comments");
+        query.include("idUser");
+        query.include("idPlace");
+        query.whereEqualTo("idPlace", idPlace);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
-                    //place.increment("ranking", 1);
-                    //place.saveInBackground();
+                    loader.dismiss();
+                    commentAdapter = null;
+                    data = new ArrayList<Comments>();
+
+                    for (int i = 0; i < objects.size(); i++) {
+                        data.add(new Comments(objects.get(i).getParseObject("idUser").getString("username"), Config.formattedDate(objects.get(i).getCreatedAt()), objects.get(i).getString("post"), objects.get(i).getInt("rating")));
+                    }
+
+                    commentAdapter = new CommentsAdapter(getApplicationContext(), data);
+                    listComment.setAdapter(commentAdapter);
+                    commentAdapter.notifyDataSetChanged();
+                } else {
+                    loader.dismiss();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_comment_data), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -96,6 +133,9 @@ public class Comment extends ActionBarActivity {
                 ParseUser user = ParseUser.getCurrentUser();
                 if(user != null && !user.getUsername().equals("")){
                     doComment(post, rating);
+
+                    data.add(0, new Comments(ParseUser.getCurrentUser().getUsername(), Config.formattedDate(new Date()), post.toString(), (int)rating.getRating()));
+                    commentAdapter.notifyDataSetChanged();
                 }
                 else{
                     Config.comingComment = true;

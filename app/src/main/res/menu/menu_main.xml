@@ -10,15 +10,10 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_map"
-        android:title="@string/action_places_map"
-        android:icon="@drawable/ic_action_maps_map"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/action_places_my_location"
         android:title="@string/action_places_my_location"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_action_navigation_refresh"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_share"

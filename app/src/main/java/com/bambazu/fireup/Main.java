@@ -11,7 +11,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v7.app.ActionBarActivity;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +20,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.bambazu.fireup.Adapter.PlaceAdapter;
 import com.bambazu.fireup.Config.Config;
 import com.bambazu.fireup.Helper.DataManager;
@@ -36,12 +36,11 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.parse.ParseObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Main extends ActionBarActivity implements DataListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class Main extends AppCompatActivity implements DataListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private Location lastLocation;
     private GoogleApiClient googleApiClient;
@@ -63,6 +62,7 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
     private NetworkManager networkManager;
 
     private ProgressDialog loader = null;
+    private FloatingActionButton btnMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +76,15 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
 
         listPlaces = (ListView) findViewById(R.id.listPlaces);
         listPlaces.setEmptyView(findViewById(android.R.id.empty));
+
+        btnMap = (FloatingActionButton) findViewById(R.id.btn_map);
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Map.class);
+                startActivity(i);
+            }
+        });
 
         if(checkPlayServices()){
             loader.show();
@@ -109,6 +118,7 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
     @Override
     protected void onPause() {
         super.onPause();
+        hideLoader();
         if(googleApiClient.isConnected()){
             stopLocationUpdates();
         }
@@ -117,6 +127,7 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
     @Override
     public void onStop() {
         super.onStop();
+        hideLoader();
         googleApiClient.disconnect();
     }
 
@@ -132,12 +143,6 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
 
         if (id == R.id.action_search) {
             startActivityForResult(new Intent(this, Search.class), SEARCH_REQUEST);
-            return true;
-        }
-        else if(id == R.id.action_map){
-            Intent i = new Intent(this, Map.class);
-            startActivity(i);
-
             return true;
         }
         else if(id == R.id.action_places_my_location){
@@ -169,6 +174,7 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
             getPlaces("Search", searchData);
 
             listPlaces.setAdapter(null);
+            Config.currentPlaces.clear();
         }
     }
 
@@ -186,12 +192,11 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
 
     @Override
     public void onLocationChanged(Location location) {
-        if(loader != null){
-            loader.dismiss();
-        }
-
+        hideLoader();
         lastLocation = location;
         getPlaces("List", null);
+
+        stopLocationUpdates();
     }
 
     @Override
@@ -204,9 +209,11 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
 
         if(resultCode != ConnectionResult.SUCCESS){
             if(GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                hideLoader();
                 GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
             }
             else {
+                hideLoader();
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.device_not_supported), Toast.LENGTH_LONG).show();
             }
 
@@ -284,6 +291,7 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
 
             final PlaceAdapter placeAdapter = new PlaceAdapter(this, places);
             listPlaces.setAdapter(placeAdapter);
+            placeAdapter.notifyDataSetChanged();
 
             listPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -314,7 +322,6 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
             return;
         }
 
-        lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if(lastLocation != null){
             Config.currentLatitude = lastLocation.getLatitude();
             Config.currentLongitude = lastLocation.getLongitude();
@@ -390,13 +397,13 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getResources().getString(R.string.dialog_text));
         builder.setCancelable(true);
-        builder.setItems(new CharSequence[] {getResources().getString(R.string.dialog_suggestion), getResources().getString(R.string.dialog_bug)}, new DialogInterface.OnClickListener() {
+        builder.setItems(new CharSequence[]{getResources().getString(R.string.dialog_suggestion), getResources().getString(R.string.dialog_bug)}, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String subject = "";
                 String body = "";
 
-                switch (which){
+                switch (which) {
                     case 0:
                         subject = "Suggestion";
                         break;
@@ -418,5 +425,11 @@ public class Main extends ActionBarActivity implements DataListener, GoogleApiCl
             }
         });
         builder.show();
+    }
+
+    private void hideLoader(){
+        if(loader != null){
+            loader.dismiss();
+        }
     }
 }

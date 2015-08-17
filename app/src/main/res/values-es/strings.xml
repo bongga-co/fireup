@@ -7,6 +7,12 @@
     <string name="title_activity_map">Mapa</string>
     <string name="title_activity_search">B\u00fasqueda</string>
     <string name="title_activity_detail">Detalle</string>
+    <string name="title_activity_sign_up">Registro</string>
+    <string name="title_activity_comment">Comentarios</string>
+    <string name="title_activity_splash">@string/app_name</string>
+    <string name="title_activity_login">Inicio de Sesi\u00f3n</string>
+    <string name="title_activity_forgot">Recordar Contrase\u00f1a</string>
+    <string name="title_activity_sign_in">Inicio de Sesi\u00f3n</string>
 
     <!-- Login Activity -->
     <string name="login_username">Correo Electr\u00f3nico</string>
@@ -114,8 +120,6 @@
     <string name="error_location_services_title">Servicios de Ubicaci\u00f3n</string>
     <string name="error_location_services">Por favor activa los Servicios de Ubicaci\u00f3n, revisa la configuraci\u00f3n de tu tel\u00e9fono e intenta de nuevo.</string>
     <string name="action_settings">Ajustes</string>
-    <string name="title_activity_comment">Comentarios</string>
-    <string name="title_activity_splash">Splash</string>
     <string name="facebook_app_id">1606340736301392</string>
     <string name="action_add_comment">Comentar</string>
     <string name="comment_rating_title">Calificaci\u00f3n</string>
@@ -123,5 +127,19 @@
     <string name="comment_error_rating">Escoja una calificaci\u00f3n</string>
     <string name="comment_success">Comentario agregado con \u00e9xito</string>
     <string name="comment_submit_error">No se pudo guardar el comentario</string>
+    <string name="error_comment_data">No se pudo obtener los comentarios</string>
+    <string name="comments_empty">No hay comentarios para este lugar</string>
+    <string name="currency_type">Pesos Colombianos</string>
+    <string name="msg_login">Encuentra los mejores lugares de entretenimiento adulto m\u00e1s cerca de ti</string>
+    <string name="terms">No publicamos nada en Facebook sin tu autorizaci\u00f3n expl\u00edcita, s\u00f3lo necesitas tus datos para comentar.</string>
+
+    <!-- SignUp Activity -->
+    <string name="signup_email">Correo Electr\u00f3nico</string>
+    <string name="signup_username">Usuario</string>
+    <string name="signup_password">Contrase\u00f1a</string>
+    <string name="verify_password">Confirmar Contrase\u00f1a</string>
+
+    <!-- Forgot Activity -->
+    <string name="btn_forgot_send">Enviar</string>
 
 </resources>

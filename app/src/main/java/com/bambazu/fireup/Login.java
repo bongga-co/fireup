@@ -2,37 +2,48 @@ package com.bambazu.fireup;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.bambazu.fireup.Config.Config;
+import com.bambazu.fireup.Helper.LocalDataManager;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
-
 import java.util.Arrays;
 import java.util.List;
 
-public class Login extends ActionBarActivity implements View.OnClickListener {
+public class Login extends AppCompatActivity implements View.OnClickListener {
     private Button fbButton;
-    private Button skipButton;
+    private ImageButton skipButton;
     private Button loginButton;
     private Button signUpButton;
     private Button forgotButton;
-    private EditText username;
-    private EditText password;
     private ProgressDialog dialog;
+    LocalDataManager localDataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        localDataManager = new LocalDataManager(this);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+
+        if(!Config.comingComment){
+            if (currentUser != null || localDataManager.isSkipped()) { // && ParseFacebookUtils.isLinked(currentUser)
+                startActivity(new Intent(Login.this, Main.class));
+                finish();
+            }
+        }
+        else{
+            Config.comingComment = false;
+        }
+
         setContentView(R.layout.activity_login);
 
         dialog = new ProgressDialog(this);
@@ -51,7 +62,7 @@ public class Login extends ActionBarActivity implements View.OnClickListener {
         fbButton = (Button) findViewById(R.id.login_button);
         fbButton.setOnClickListener(this);
 
-        skipButton = (Button) findViewById(R.id.btn_skip);
+        skipButton = (ImageButton) findViewById(R.id.btn_skip);
         skipButton.setOnClickListener(this);
     }
 
@@ -85,18 +96,21 @@ public class Login extends ActionBarActivity implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
+        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
     public void onClick(View v){
         switch (v.getId()){
             case R.id.btn_login_login:
+                startActivity(new Intent(Login.this, SignIn.class));
                 break;
 
             case R.id.btn_login_signup:
+                startActivity(new Intent(Login.this, SignUp.class));
                 break;
 
             case R.id.btn_login_forgot:
+                startActivity(new Intent(Login.this, Forgot.class));
                 break;
 
             case R.id.login_button:
@@ -104,6 +118,7 @@ public class Login extends ActionBarActivity implements View.OnClickListener {
                 break;
 
             case R.id.btn_skip:
+                localDataManager.saveLocalData(null, null, null, false, true);
                 startActivity(new Intent(Login.this, Main.class));
                 finish();
                 break;
@@ -114,30 +129,28 @@ public class Login extends ActionBarActivity implements View.OnClickListener {
         dialog.show();
 
         List<String> permissions = Arrays.asList("email", "public_profile");
-        ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
+        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException err) {
                 dialog.dismiss();
 
                 if (user == null) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_login_facebook), Toast.LENGTH_SHORT).show();
-                }
-                else if (user.isNew()) {
-                    if(Config.comingComment){
+                } else if (user.isNew()) {
+                    if (Config.comingComment) {
                         Config.comingComment = false;
                         finish();
-                    }
-                    else{
+                    } else {
                         startActivity(new Intent(Login.this, Main.class));
                         finish();
                     }
                 }
                 else {
-                    if(Config.comingComment){
+                    if (Config.comingComment) {
                         Config.comingComment = false;
                         finish();
                     }
-                    else{
+                    else {
                         startActivity(new Intent(Login.this, Main.class));
                         finish();
                     }

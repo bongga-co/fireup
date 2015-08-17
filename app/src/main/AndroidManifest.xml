@@ -13,7 +13,6 @@
     <permission android:name="com.bambazu.fireup.permission.MAPS_RECEIVE" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <!-- Optional - Non-Google Play Devices -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -39,7 +38,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
         <!--
          Optionally, register AnalyticsReceiver and AnalyticsService to support background
          dispatching on non-Google Play devices
@@ -75,9 +73,10 @@
             android:name=".Splash"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/Splash" >
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -85,7 +84,7 @@
             android:name=".Login"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
-            android:theme="@style/Splash">
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
         </activity>
         <activity
             android:name=".Main"
@@ -131,11 +130,35 @@
                 android:value="com.bambazu.fireup.Detail" />
         </activity>
         <activity
-            android:name="com.facebook.LoginActivity"
+            android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".SignUp"
+            android:label="@string/title_activity_sign_up"
+            android:parentActivityName=".Login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bambazu.fireup.Login" />
+        </activity>
+        <activity
+            android:name=".Forgot"
+            android:label="@string/title_activity_forgot"
+            android:parentActivityName=".Login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bambazu.fireup.Login" />
+        </activity>
+        <activity
+            android:name=".SignIn"
+            android:label="@string/title_activity_sign_in"
+            android:parentActivityName=".Login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bambazu.fireup.Login" />
+        </activity>
     </application>
 
 </manifest>

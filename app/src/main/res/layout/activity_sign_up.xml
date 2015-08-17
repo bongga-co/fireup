@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/login_margin"
+    tools:context="com.bambazu.fireup.SignUp"
+    android:background="@drawable/bg">
+
+    <EditText
+        android:id="@+id/signup_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signup_email"
+        android:textColor="@color/btn_search_title_color"
+        android:layout_marginTop="40dp"/>
+
+    <EditText
+        android:id="@+id/signup_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signup_username"
+        android:textColor="@color/btn_search_title_color"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/signup_email"/>
+
+    <EditText
+        android:id="@+id/signup_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/signup_password"
+        android:textColor="@color/btn_search_title_color"
+        android:layout_marginTop="10dp"
+        android:password="true"
+        android:layout_below="@+id/signup_username"/>
+
+    <EditText
+        android:id="@+id/verify_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/verify_password"
+        android:password="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/btn_search_title_color"
+        android:layout_below="@+id/signup_password"/>
+
+    <Button
+        android:id="@+id/btn_signup_signup"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/btn_signup_text"
+        android:textColor="@color/btn_search_title_color"
+        android:background="@color/btn_show_more_desc"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/verify_password"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/terms"
+        android:textSize="10sp"
+        android:textColor="@color/actionbar_title_color"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="10dp"/>
+
+</RelativeLayout>

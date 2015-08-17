@@ -7,8 +7,8 @@ import android.net.Uri;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,12 +21,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bambazu.fireup.Adapter.CommentsAdapter;
 import com.bambazu.fireup.Adapter.ServiceAdapter;
 import com.bambazu.fireup.Adapter.ViewPagerAdapter;
 import com.bambazu.fireup.Config.Config;
 import com.bambazu.fireup.Helper.DistanceManager;
 import com.bambazu.fireup.Helper.NetworkManager;
 import com.bambazu.fireup.Interfaz.CalculateDistanceListener;
+import com.bambazu.fireup.Model.Comments;
 import com.bambazu.fireup.Model.Place;
 import com.bambazu.fireup.Model.Service;
 import com.google.android.gms.analytics.HitBuilders;
@@ -42,7 +44,7 @@ import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 
-public class Detail extends ActionBarActivity implements View.OnClickListener, CalculateDistanceListener {
+public class Detail extends AppCompatActivity implements View.OnClickListener, CalculateDistanceListener {
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
     private ArrayList<String> place_image;
@@ -221,17 +223,42 @@ public class Detail extends ActionBarActivity implements View.OnClickListener, C
 
         placeName.setText(placeData.getPlaceName());
         placeCategory.setText(getApplicationContext().getResources().getIdentifier(placeData.getPlaceCategory().toLowerCase(), "string", getApplicationContext().getPackageName()));
-        placeRating.setRating(placeData.getPlaceRanking().floatValue());
+
+        ParseObject idPlace = ParseObject.createWithoutData("Places", objectId);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Comments");
+        query.whereEqualTo("idPlace", idPlace);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    int sum = 0;
+                    float avg = 0;
+
+                    for(int i=0; i < objects.size(); i++){
+                        sum += (int)objects.get(i).getNumber("rating");
+                    }
+
+                    avg = (objects.size() != 0) ? (sum / objects.size()) : 0;
+                    placeRating.setRating(avg);
+                }
+            }
+        });
 
         if(placeCategory.getText().toString().toLowerCase().equals("motel") && placeData.getRooms() > 0){
             placeAvailableRooms.setText(placeData.getRooms() + " " + getResources().getString(R.string.available_rooms));
         }
 
-        placeLowPrice.setText(formatCurrency(placeData.getLowprice()) + " (COP)");
-        placeHighPrice.setText(formatCurrency(placeData.getHighprice()) + " (COP)");
+        placeLowPrice.setText(formatCurrency(placeData.getLowprice()));
+        placeHighPrice.setText(formatCurrency(placeData.getHighprice()));
 
         placeAddress.setText(placeData.getAddress());
-        placePhone.setText(placeData.getPhone().toString().substring(3));
+        if(placeData.getPhone().toString().charAt(0) == '0'){
+            placePhone.setText(placeData.getPhone().toString().substring(3));
+        }
+        else {
+            placePhone.setText(placeData.getPhone().toString());
+        }
+
         placeCity.setText(placeData.getCity().toString() + " - " + placeData.getDepto().toString());
 
         placeDescription.setText(showPlaceDescription(placeData.getDescription()));

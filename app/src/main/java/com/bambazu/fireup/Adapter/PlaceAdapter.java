@@ -2,6 +2,8 @@ package com.bambazu.fireup.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,14 +28,15 @@ public class PlaceAdapter extends BaseAdapter {
     private ArrayList<Place> listPlaces;
     private ViewHolder holder;
     private AQuery imgLoader;
-    private int loader = R.drawable.ic_loader;
     private HashMap<String, Double> locationData;
+    private Bitmap loader;
 
     public PlaceAdapter(Context context, ArrayList<Place> listPlaces) {
         this.context = context;
         this.listPlaces = listPlaces;
 
         imgLoader = new AQuery(context);
+        loader = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_loader);
     }
 
     @Override
@@ -87,7 +90,7 @@ public class PlaceAdapter extends BaseAdapter {
         }
 
         AQuery asyncLoader = imgLoader.recycle(convertView);
-        asyncLoader.id(holder.placeIcon).progress(R.drawable.ic_loader).image(place.getPlaceIcon(), true, true, 0, 0, null, 0, 1.0f);
+        asyncLoader.id(holder.placeIcon).image(place.getPlaceIcon(), true, true, 0, 0, loader, 0, 1.0f);
 
         return convertView;
     }

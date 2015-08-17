@@ -2,16 +2,10 @@ package com.bambazu.fireup;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
 
-import com.parse.ParseFacebookUtils;
-import com.parse.ParseUser;
-
-
-public class Splash extends ActionBarActivity {
+public class Splash extends AppCompatActivity {
     private static int SPLASH_TIMER = 3000;
 
     @Override
@@ -23,15 +17,7 @@ public class Splash extends ActionBarActivity {
 
             @Override
             public void run() {
-                ParseUser currentUser = ParseUser.getCurrentUser();
-
-                if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
-                    startActivity(new Intent(Splash.this, Main.class));
-                }
-                else{
-                    startActivity(new Intent(Splash.this, Login.class));
-                }
-
+                startActivity(new Intent(Splash.this, Login.class));
                 finish();
             }
         }, SPLASH_TIMER);
