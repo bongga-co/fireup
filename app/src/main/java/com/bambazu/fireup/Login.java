@@ -39,13 +39,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         ParseUser currentUser = ParseUser.getCurrentUser();
 
         if(!Config.comingComment){
-            if (currentUser != null || localDataManager.isSkipped()) { // && ParseFacebookUtils.isLinked(currentUser)
+            if (currentUser != null || localDataManager.isSkipped()) {
                 startActivity(new Intent(Login.this, Main.class));
                 finish();
             }
-        }
-        else{
-            Config.comingComment = false;
         }
 
         setContentView(R.layout.activity_login);
@@ -103,6 +100,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
+    public void onBackPressed(View v) {
+        if (Config.comingComment) {
+            setResult(RESULT_OK, new Intent());
+            Config.comingComment = false;
+            finish();
+        }
+
+        super.onBackPressed();
+    }
+
     public void onClick(View v){
         switch (v.getId()){
             case R.id.btn_login_login:
@@ -122,8 +129,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 break;
 
             case R.id.btn_skip:
-                localDataManager.saveLocalData(null, null, null, false, true);
-                startActivity(new Intent(Login.this, Main.class));
+                if (Config.comingComment) {
+                    setResult(RESULT_OK, new Intent());
+                    Config.comingComment = false;
+                }
+                else{
+                    localDataManager.saveLocalData(null, null, null, false, true);
+                    startActivity(new Intent(Login.this, Main.class));
+                }
+
                 finish();
                 break;
         }
@@ -140,24 +154,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 if (user == null) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_login_facebook), Toast.LENGTH_SHORT).show();
-                }
-                else if (user.isNew()) {
+                } else if (user.isNew()) {
                     if (Config.comingComment) {
+                        setResult(RESULT_OK, new Intent());
                         Config.comingComment = false;
                         finish();
-                    }
-                    else {
+                    } else {
                         showFbUsername();
                         startActivity(new Intent(Login.this, Main.class));
                         finish();
                     }
-                }
-                else {
+                } else {
                     if (Config.comingComment) {
+                        setResult(RESULT_OK, new Intent());
                         Config.comingComment = false;
                         finish();
-                    }
-                    else {
+                    } else {
                         showFbUsername();
                         startActivity(new Intent(Login.this, Main.class));
                         finish();

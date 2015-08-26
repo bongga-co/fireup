@@ -222,6 +222,13 @@ public class Detail extends AppCompatActivity implements View.OnClickListener, C
         indicator.setViewPager(viewPager);
 
         placeName.setText(placeData.getPlaceName());
+
+        Config.tracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Detail UI")
+                .setAction("Visit")
+                .setLabel("Detail For: " + placeData.getPlaceName())
+                .build());
+
         placeCategory.setText(getApplicationContext().getResources().getIdentifier(placeData.getPlaceCategory().toLowerCase(), "string", getApplicationContext().getPackageName()));
 
         ParseObject idPlace = ParseObject.createWithoutData("Places", objectId);

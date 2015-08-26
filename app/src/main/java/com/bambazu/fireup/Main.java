@@ -65,6 +65,7 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
 
     private DataManager dataManager;
     private NetworkManager networkManager;
+    private LocalDataManager localDataManager;
 
     private ProgressDialog loader = null;
     private FloatingActionButton btnMap;
@@ -74,7 +75,11 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Config.tracker.setScreenName(this.getClass().toString());
+
+        localDataManager = new LocalDataManager(this);
         networkManager = new NetworkManager(this);
+
         loader = new ProgressDialog(this);
         loader.setCancelable(false);
         loader.setMessage(getResources().getString(R.string.getting_location));
@@ -139,6 +144,14 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        if(ParseUser.getCurrentUser() != null && ParseUser.getCurrentUser().isAuthenticated()){
+            menu.getItem(5).setTitle(R.string.action_logout);
+        }
+        else{
+            menu.getItem(5).setTitle(R.string.btn_login_text);
+        }
+
         return true;
     }
 
@@ -166,7 +179,17 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
             contactTeam();
         }
         else if(id == R.id.action_logout){
-            onLogout();
+            if(ParseUser.getCurrentUser() != null && ParseUser.getCurrentUser().isAuthenticated()){
+                onLogout();
+            }
+            else{
+                localDataManager.saveLocalData(null, null, null, false, false);
+                startActivity(new Intent(Main.this, Login.class));
+                finish();
+            }
+        }
+        else if(id == R.id.action_offer){
+            startActivity(new Intent(Main.this, Offers.class));
         }
 
         return super.onOptionsItemSelected(item);

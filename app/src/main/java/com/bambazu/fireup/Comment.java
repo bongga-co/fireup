@@ -37,6 +37,7 @@ public class Comment extends AppCompatActivity {
     private ArrayList<Comments> data;
     private ProgressDialog loader;
     private FloatingActionButton btnComment;
+    private static final int COMMENT_REQUEST = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,12 +133,11 @@ public class Comment extends AppCompatActivity {
                 final RatingBar rating = (RatingBar) comment_wrapper.findViewById(R.id.comment_rating);
 
                 ParseUser user = ParseUser.getCurrentUser();
-                if(user != null && !user.getUsername().equals("")){
+                if (user != null && !user.getUsername().equals("")) {
                     doComment(post, rating);
-                }
-                else{
+                } else {
                     Config.comingComment = true;
-                    startActivity(new Intent(Comment.this, Login.class));
+                    startActivityForResult(new Intent(Comment.this, Login.class), COMMENT_REQUEST);
                 }
             }
         });
@@ -179,17 +179,25 @@ public class Comment extends AppCompatActivity {
         newComment.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if(e == null){
+                if (e == null) {
                     Config.tracker.send(new HitBuilders.EventBuilder()
                             .setCategory("Comment UI")
                             .setAction("Submit")
                             .setLabel("New Comment")
                             .build());
-                }
-                else{
+                } else {
                     Toast.makeText(Comment.this, getResources().getString(R.string.comment_submit_error), Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == COMMENT_REQUEST && resultCode == RESULT_OK){
+            //doComment(post, rating);
+        }
     }
 }

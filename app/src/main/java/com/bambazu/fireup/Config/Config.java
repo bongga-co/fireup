@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.util.Base64;
+import android.util.Log;
+
 import com.bambazu.fireup.Model.Place;
 import com.bambazu.fireup.R;
 import com.facebook.FacebookSdk;
@@ -46,7 +49,7 @@ public class Config extends Application {
         tracker = analytics.newTracker("UA-55361973-3");
         tracker.enableExceptionReporting(true);
         tracker.enableAdvertisingIdCollection(true);
-        tracker.enableAutoActivityTracking(true);
+        tracker.enableAutoActivityTracking(false);
     }
 
     public static int setPlaceColor(String type){
@@ -79,6 +82,7 @@ public class Config extends Application {
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
         }
         catch (PackageManager.NameNotFoundException e) {}

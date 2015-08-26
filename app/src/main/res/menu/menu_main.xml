@@ -10,10 +10,16 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/action_offer"
+        android:title="@string/action_offer"
+        android:icon="@drawable/ic_discount"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_places_my_location"
         android:title="@string/action_places_my_location"
         android:icon="@drawable/ic_action_navigation_refresh"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_share"

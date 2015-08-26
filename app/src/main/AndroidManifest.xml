@@ -159,6 +159,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bambazu.fireup.Login" />
         </activity>
+        <activity
+            android:name=".Offers"
+            android:label="@string/title_activity_offers"
+            android:parentActivityName=".Main" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bambazu.fireup.Main" />
+        </activity>
     </application>
 
 </manifest>

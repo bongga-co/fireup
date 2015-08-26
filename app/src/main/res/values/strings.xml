@@ -12,6 +12,7 @@
     <string name="title_activity_splash">@string/app_name</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_forgot">Forgot</string>
+    <string name="title_activity_sign_in">SingIn</string>
 
     <!-- Login Activity -->
     <string name="login_username">Username</string>
@@ -44,6 +45,7 @@
     <string name="dialog_bug">Report a Bug</string>
     <string name="support_email">fireup.entertainment@gmail.com</string>
     <string name="contact_chooser_title">Choose a Mailbox</string>
+    <string name="action_offer">Offers</string>
 
     <!-- Map Activity -->
     <string name="places_size">Results</string>
@@ -151,4 +153,9 @@
     <string name="btn_forgot_send">Send</string>
     <string name="error_msg_forgot">Failed to send email, try again later</string>
     <string name="success_msg_forgot">An email was successfully sent with reset instructions.</string>
+
+    <!-- Offers Activity -->
+    <string name="title_activity_offers">Offers</string>
+    <string name="empty_offer_data">No offers available</string>
+    <string name="error_offer">Unable to get offers</string>
 </resources>

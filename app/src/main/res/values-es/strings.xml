@@ -45,6 +45,7 @@
     <string name="dialog_bug">Reportar un Error</string>
     <string name="support_email">fireup.entertainment@gmail.com</string>
     <string name="contact_chooser_title">Elegir Cliente de Correo</string>
+    <string name="action_offer">Promociones</string>
 
     <!-- Map Activity -->
     <string name="places_size">Resultados</string>
@@ -152,5 +153,10 @@
     <string name="btn_forgot_send">Enviar</string>
     <string name="error_msg_forgot">No se pudo enviar el correo electr\u00f3nico, intente m\u00e1s tarde</string>
     <string name="success_msg_forgot">Te hemos enviado un correo electr\u00f3nico, sigue las instrucciones par reiniciar tu contrase\u00f1a</string>
+
+    <!-- Offers Activity -->
+    <string name="title_activity_offers">Promociones</string>
+    <string name="empty_offer_data">No hay promociones disponibles</string>
+    <string name="error_offer">No se pudo obtener la informaci\u00f3n de las promociones</string>
 
 </resources>
