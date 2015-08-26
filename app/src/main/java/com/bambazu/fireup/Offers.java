@@ -72,7 +72,7 @@ public class Offers extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_offers, menu);
-        return true;
+        return false;
     }
 
     @Override
@@ -110,30 +110,32 @@ public class Offers extends AppCompatActivity {
                     dataPlace = new ArrayList<Place>();
 
                     for(int i=0; i<objects.size(); i++){
-                        offerData.add(new Discount(objects.get(i).getObjectId(), objects.get(i).getParseFile("picture").getUrl(), objects.get(i).getString("discount"), objects.get(i).getParseObject("idPlace").getString("category") + " " + objects.get(i).getParseObject("idPlace").getString("name"), objects.get(i).getString("description")));
-                        dataPlace.add(new Place(
-                                objects.get(i).getParseObject("idPlace").getObjectId(),
-                                objects.get(i).getParseObject("idPlace").getString("name"),
-                                objects.get(i).getParseObject("idPlace").getParseFile("preview_one").getUrl(),
-                                objects.get(i).getParseObject("idPlace").getParseFile("preview_two").getUrl(),
-                                objects.get(i).getParseObject("idPlace").getParseFile("preview_three").getUrl(),
-                                objects.get(i).getParseObject("idPlace").getParseFile("preview_four").getUrl(),
-                                objects.get(i).getParseObject("idPlace").getParseFile("preview_five").getUrl(),
-                                objects.get(i).getParseObject("idPlace").getString("category"),
-                                objects.get(i).getParseObject("idPlace").getNumber("ranking"),
-                                objects.get(i).getParseObject("idPlace").getParseGeoPoint("position").getLatitude(),
-                                objects.get(i).getParseObject("idPlace").getParseGeoPoint("position").getLongitude(),
-                                objects.get(i).getParseObject("idPlace").getNumber("rooms").intValue(),
-                                objects.get(i).getParseObject("idPlace").getBoolean("visible"),
-                                objects.get(i).getParseObject("idPlace").getString("address"),
-                                objects.get(i).getParseObject("idPlace").getString("city"),
-                                objects.get(i).getParseObject("idPlace").getString("depto"),
-                                objects.get(i).getParseObject("idPlace").getString("country"),
-                                objects.get(i).getParseObject("idPlace").getString("description"),
-                                objects.get(i).getParseObject("idPlace").getNumber("lowprice"),
-                                objects.get(i).getParseObject("idPlace").getNumber("highprice"),
-                                objects.get(i).getParseObject("idPlace").getString("phone")
-                        ));
+                        if(objects.get(i).getBoolean("visible")){
+                            offerData.add(new Discount(objects.get(i).getObjectId(), objects.get(i).getParseFile("picture").getUrl(), objects.get(i).getString("discount"), objects.get(i).getParseObject("idPlace").getString("category") + " " + objects.get(i).getParseObject("idPlace").getString("name"), objects.get(i).getString("description")));
+                            dataPlace.add(new Place(
+                                    objects.get(i).getParseObject("idPlace").getObjectId(),
+                                    objects.get(i).getParseObject("idPlace").getString("name"),
+                                    objects.get(i).getParseObject("idPlace").getParseFile("preview_one").getUrl(),
+                                    objects.get(i).getParseObject("idPlace").getParseFile("preview_two").getUrl(),
+                                    objects.get(i).getParseObject("idPlace").getParseFile("preview_three").getUrl(),
+                                    objects.get(i).getParseObject("idPlace").getParseFile("preview_four").getUrl(),
+                                    objects.get(i).getParseObject("idPlace").getParseFile("preview_five").getUrl(),
+                                    objects.get(i).getParseObject("idPlace").getString("category"),
+                                    objects.get(i).getParseObject("idPlace").getNumber("ranking"),
+                                    objects.get(i).getParseObject("idPlace").getParseGeoPoint("position").getLatitude(),
+                                    objects.get(i).getParseObject("idPlace").getParseGeoPoint("position").getLongitude(),
+                                    objects.get(i).getParseObject("idPlace").getNumber("rooms").intValue(),
+                                    objects.get(i).getParseObject("idPlace").getBoolean("visible"),
+                                    objects.get(i).getParseObject("idPlace").getString("address"),
+                                    objects.get(i).getParseObject("idPlace").getString("city"),
+                                    objects.get(i).getParseObject("idPlace").getString("depto"),
+                                    objects.get(i).getParseObject("idPlace").getString("country"),
+                                    objects.get(i).getParseObject("idPlace").getString("description"),
+                                    objects.get(i).getParseObject("idPlace").getNumber("lowprice"),
+                                    objects.get(i).getParseObject("idPlace").getNumber("highprice"),
+                                    objects.get(i).getParseObject("idPlace").getString("phone")
+                            ));
+                        }
                     }
 
                     Config.offersPlaces = dataPlace;

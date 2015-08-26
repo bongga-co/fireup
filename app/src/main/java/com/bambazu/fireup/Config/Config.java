@@ -14,6 +14,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParsePush;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -42,6 +43,7 @@ public class Config extends Application {
         Parse.initialize(this, "W8c7QBPJW1B2FBqCFwZPra6fHvIZcQncEl3USxBJ", "roS4gCRfShVZeQ8GDQgcrgOttWQ83tChFuYPLhqh");
         FacebookSdk.sdkInitialize(getApplicationContext());
         ParseFacebookUtils.initialize(getApplicationContext());
+        ParsePush.subscribeInBackground("Offers");
         printHashKey();
 
         analytics = GoogleAnalytics.getInstance(this);

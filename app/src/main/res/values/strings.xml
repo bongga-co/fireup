@@ -69,11 +69,14 @@
     <string-array name="cities">
         <item>Choose City</item>
         <item>Bello</item>
+        <item>Bogot\u00e1</item>
         <item>Copacabana</item>
         <item>Envigado</item>
         <item>Itagu\u00ed</item>
         <item>La Estrella</item>
         <item>Medell\u00edn</item>
+        <item>Pereira</item>
+        <item>Rionegro</item>
         <item>Sabaneta</item>
     </string-array>
 
