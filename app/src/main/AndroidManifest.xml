@@ -162,10 +162,19 @@
         <activity
             android:name=".Offers"
             android:label="@string/title_activity_offers"
+            android:launchMode="singleTop"
             android:parentActivityName=".Main" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bambazu.fireup.Main" />
+        </activity>
+        <activity
+            android:name=".OfferDetail"
+            android:label="@string/title_activity_offer_detail"
+            android:parentActivityName=".Offers" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bambazu.fireup.Offers" />
         </activity>
     </application>
 

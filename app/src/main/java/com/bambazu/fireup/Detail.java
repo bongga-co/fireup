@@ -115,7 +115,16 @@ public class Detail extends AppCompatActivity implements View.OnClickListener, C
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            Place placeData = Config.currentPlaces.get(extras.getInt("placePosition"));
+            Place placeData;
+
+            if(Config.offersPlaces != null){
+                placeData = Config.offersPlaces.get(extras.getInt("placePosition"));
+                Config.offersPlaces = null;
+            }
+            else{
+                placeData = Config.currentPlaces.get(extras.getInt("placePosition"));
+            }
+
             setTitle(placeData.getPlaceName());
             objectId = placeData.getPlaceCode();
             showPlaceData(placeData);
@@ -297,7 +306,7 @@ public class Detail extends AppCompatActivity implements View.OnClickListener, C
         AlertDialog.Builder dialog = new AlertDialog.Builder(Detail.this);
         dialog.setView(comment_wrapper);
 
-        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(getResources().getString(R.string.ok_btn), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
             }
         });
@@ -367,7 +376,7 @@ public class Detail extends AppCompatActivity implements View.OnClickListener, C
                         AlertDialog.Builder dialog = new AlertDialog.Builder(Detail.this);
                         dialog.setView(serviceWrapper);
 
-                        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        dialog.setPositiveButton(getResources().getString(R.string.ok_btn), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 gridServices.setEnabled(true);
                                 gridServices.setText(getResources().getString(R.string.btn_show_services));

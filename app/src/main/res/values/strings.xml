@@ -158,4 +158,11 @@
     <string name="title_activity_offers">Offers</string>
     <string name="empty_offer_data">No offers available</string>
     <string name="error_offer">Unable to get offers</string>
+    <string name="title_activity_offer_detail">Offer Detail</string>
+    <string name="claim_offer">Claim Coupon</string>
+    <string name="go_place_offer">See Place Details</string>
+    <string name="qr_error">Unable to get coupon</string>
+    <string name="offer_qr_code">Offer Code - </string>
+    <string name="offer_qr_place">Place - </string>
+    <string name="offer_qr_discount">Discount - </string>
 </resources>

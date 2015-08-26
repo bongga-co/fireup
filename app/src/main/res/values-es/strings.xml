@@ -158,5 +158,12 @@
     <string name="title_activity_offers">Promociones</string>
     <string name="empty_offer_data">No hay promociones disponibles</string>
     <string name="error_offer">No se pudo obtener la informaci\u00f3n de las promociones</string>
+    <string name="title_activity_offer_detail">Detalle de la Promoci\u00f3n</string>
+    <string name="claim_offer">Reclamar Cup\u00f3n</string>
+    <string name="go_place_offer">Ver Informaci\u00f3n del Lugar</string>
+    <string name="qr_error">No se pudo generar el cup\u00f3n</string>
+    <string name="offer_qr_code">C\u00f3digo de Promoci\u00f3n - </string>
+    <string name="offer_qr_place">Lugar - </string>
+    <string name="offer_qr_discount">Descuento - </string>
 
 </resources>

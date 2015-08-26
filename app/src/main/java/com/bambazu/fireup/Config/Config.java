@@ -29,6 +29,7 @@ public class Config extends Application {
     public static double currentLatitude = 0.0;
     public static double currentLongitude = 0.0;
     public static ArrayList<Place> currentPlaces;
+    public static ArrayList<Place> offersPlaces = null;
 
     public static GoogleAnalytics analytics;
     public static Tracker tracker;

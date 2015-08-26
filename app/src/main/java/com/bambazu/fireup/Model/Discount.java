@@ -8,12 +8,14 @@ public class Discount {
     private String offerIcon;
     private String offerDiscount;
     private String offerPlace;
+    private String offerDesc;
 
-    public Discount(String offerID, String offerIcon, String offerDiscount, String offerPlace){
+    public Discount(String offerID, String offerIcon, String offerDiscount, String offerPlace, String offerDesc){
         this.offerID = offerID;
         this.offerIcon = offerIcon;
         this.offerDiscount = offerDiscount;
         this.offerPlace = offerPlace;
+        this.offerDesc = offerDesc;
     }
 
     public String getOfferID() {
@@ -46,5 +48,13 @@ public class Discount {
 
     public void setOfferPlace(String offerPlace) {
         this.offerPlace = offerPlace;
+    }
+
+    public String getOfferDesc() {
+        return offerDesc;
+    }
+
+    public void setOfferDesc(String offerDesc) {
+        this.offerDesc = offerDesc;
     }
 }
