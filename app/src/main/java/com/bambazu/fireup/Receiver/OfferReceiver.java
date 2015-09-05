@@ -9,6 +9,8 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
+
+import com.bambazu.fireup.Main;
 import com.bambazu.fireup.Offers;
 import com.bambazu.fireup.R;
 import com.parse.ParsePushBroadcastReceiver;
@@ -63,9 +65,22 @@ public class OfferReceiver extends ParsePushBroadcastReceiver {
             JSONObject data = json.getJSONObject("data");
             String title = data.getString("title");
             String message = data.getString("message");
+            String typePush = data.getString("type_push");
+            Intent resultIntent = null;
 
-            Intent resultIntent = new Intent(context, Offers.class);
-            showNotificationMessage(context, title, message, resultIntent);
+            switch (typePush){
+                case "Offer":
+                    resultIntent = new Intent(context, Offers.class);
+                    break;
+
+                case "General":
+                    resultIntent = new Intent(context, Main.class);
+                    break;
+            }
+
+            if(resultIntent != null){
+                showNotificationMessage(context, title, message, resultIntent);
+            }
         }
         catch (JSONException e) {}
     }

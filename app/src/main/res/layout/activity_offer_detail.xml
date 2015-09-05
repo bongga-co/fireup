@@ -21,8 +21,9 @@
                 android:id="@+id/detail_offer_icon"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_gravity="top"
-                android:scaleType="center"
+                android:maxHeight="200dp"
+                android:layout_gravity="top|center_horizontal"
+                android:scaleType="fitXY"
                 android:adjustViewBounds="true" />
 
             <LinearLayout

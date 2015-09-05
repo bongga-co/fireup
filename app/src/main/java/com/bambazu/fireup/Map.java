@@ -66,7 +66,7 @@ public class Map extends AppCompatActivity {
             });
 
             if(Config.currentLatitude != 0.0 && Config.currentLongitude != 0.0){
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Config.currentLatitude, Config.currentLongitude), 11));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Config.currentLatitude, Config.currentLongitude), 12));
 
                 if(Config.currentPlaces != null){
                     map.clear();

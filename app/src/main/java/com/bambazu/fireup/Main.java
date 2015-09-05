@@ -38,7 +38,9 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -428,7 +430,12 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getResources().getString(R.string.dialog_text));
         builder.setCancelable(true);
-        builder.setItems(new CharSequence[]{getResources().getString(R.string.dialog_suggestion), getResources().getString(R.string.dialog_bug)}, new DialogInterface.OnClickListener() {
+        builder.setItems(new CharSequence[]{
+                getResources().getString(R.string.dialog_suggestion),
+                getResources().getString(R.string.dialog_bug),
+                getResources().getString(R.string.facebook_account),
+                getResources().getString(R.string.instagram_account),
+                getResources().getString(R.string.publish_business)}, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String subject = "";
@@ -436,26 +443,46 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
 
                 switch (which) {
                     case 0:
-                        subject = "Suggestion";
+                        subject = getResources().getString(R.string.dialog_suggestion);
+                        sendEmail(subject, body);
                         break;
 
                     case 1:
-                        subject = "Bug";
+                        subject = getResources().getString(R.string.dialog_bug);
                         body = "<p><strong>Device Model</strong> " + Build.MANUFACTURER.toUpperCase() + " " + Build.MODEL + "<br/><strong>OS Version</strong> ANDROID " + Build.VERSION.RELEASE + "</p>";
+                        sendEmail(subject, body);
+                        break;
+
+                    case 2:
+                        Intent facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.facebook_url)));
+                        startActivity(facebookIntent);
+                        break;
+
+                    case 3:
+                        Intent instagramIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.instagram_url)));
+                        startActivity(instagramIntent);
+                        break;
+
+                    case 4:
+                        subject = getResources().getString(R.string.dialog_business);
+                        body = getResources().getString(R.string.publish_msg);
+                        sendEmail(subject, body);
                         break;
                 }
-
-                Intent email = new Intent(Intent.ACTION_SENDTO);
-                email.setType("text/html");
-                email.putExtra(Intent.EXTRA_EMAIL, new String[]{getResources().getString(R.string.support_email)});
-                email.putExtra(Intent.EXTRA_SUBJECT, subject);
-                email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(body));
-                email.setData(Uri.parse("mailto:"));
-
-                startActivity(Intent.createChooser(email, getResources().getString(R.string.contact_chooser_title)));
             }
         });
         builder.show();
+    }
+
+    private void sendEmail(String subject, String body){
+        Intent email = new Intent(Intent.ACTION_SENDTO);
+        email.setType("text/html");
+        email.putExtra(Intent.EXTRA_EMAIL, new String[]{getResources().getString(R.string.support_email)});
+        email.putExtra(Intent.EXTRA_SUBJECT, subject);
+        email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(body));
+        email.setData(Uri.parse("mailto:"));
+
+        startActivity(Intent.createChooser(email, getResources().getString(R.string.contact_chooser_title)));
     }
 
     private void hideLoader(){
@@ -471,6 +498,9 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
                 if(e == null){
                     LocalDataManager localDataManager = new LocalDataManager(getApplicationContext());
                     localDataManager.deleteLocalData(null);
+
+                    ParsePush.unsubscribeInBackground("Offers");
+                    ParsePush.unsubscribeInBackground("General");
 
                     startActivity(new Intent(Main.this, Login.class));
                     finish();

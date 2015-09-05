@@ -31,12 +31,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private Button forgotButton;
     private ProgressDialog dialog;
     LocalDataManager localDataManager;
+    private ParseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         localDataManager = new LocalDataManager(this);
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser = ParseUser.getCurrentUser();
 
         if(!Config.comingComment){
             if (currentUser != null || localDataManager.isSkipped()) {
@@ -98,16 +99,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public void onBackPressed(View v) {
-        if (Config.comingComment) {
-            setResult(RESULT_OK, new Intent());
-            Config.comingComment = false;
-            finish();
-        }
-
-        super.onBackPressed();
     }
 
     public void onClick(View v){

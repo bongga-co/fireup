@@ -9,6 +9,8 @@ import android.graphics.Point;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -99,7 +101,8 @@ public class OfferDetail extends AppCompatActivity implements View.OnClickListen
 
         offerDiscount.setText(data.getString("offerDiscount"));
         offerPlace.setText(data.getString("offerPlace"));
-        offerDesc.setText(data.getString("offerDesc"));
+        offerDesc.setText(Html.fromHtml(data.getString("offerDesc")));
+        offerDesc.setMovementMethod(LinkMovementMethod.getInstance());
         place = data.getString("offerPlace");
 
         Config.tracker.send(new HitBuilders.EventBuilder()

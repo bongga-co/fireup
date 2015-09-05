@@ -43,9 +43,16 @@
     <string name="dialog_text">Elegir una Opci\u00f3n</string>
     <string name="dialog_suggestion">Hacer una Sugerencia</string>
     <string name="dialog_bug">Reportar un Error</string>
+    <string name="dialog_business">Vincula tu Negocio</string>
     <string name="support_email">fireup.entertainment@gmail.com</string>
     <string name="contact_chooser_title">Elegir Cliente de Correo</string>
     <string name="action_offer">Promociones</string>
+    <string name="facebook_account">S\u00edguenos en Facebook</string>
+    <string name="instagram_account">S\u00edguenos en Instagram</string>
+    <string name="publish_business">Vincula tu Negocio</string>
+    <string name="instagram_url">https://www.instagram.com/fireupapp</string>
+    <string name="facebook_url">https://www.facebook.com/fireupapp</string>
+    <string name="publish_msg"><p>Si desea vincular su negocio a FireUp, darle m\u00e1s visibilidad y brindarle opciones modernas y que agreguen valor a sus clientes, no dude en contactactarnos.</p><br/><p><strong>FireUp, </strong>entretenimiento adulto a otro nivel.</p></string>
 
     <!-- Map Activity -->
     <string name="places_size">Resultados</string>
