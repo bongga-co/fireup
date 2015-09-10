@@ -45,6 +45,7 @@ public class Config extends Application {
         ParseFacebookUtils.initialize(getApplicationContext());
         ParsePush.subscribeInBackground("Offers");
         ParsePush.subscribeInBackground("General");
+
         printHashKey();
 
         analytics = GoogleAnalytics.getInstance(this);

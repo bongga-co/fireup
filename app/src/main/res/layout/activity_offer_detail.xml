@@ -84,6 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/claim_offer"
+            android:visibility="invisible"
             android:background="@color/color_btn_show_services"
             android:textColor="@color/color_btn_book_place"/>
     </LinearLayout>

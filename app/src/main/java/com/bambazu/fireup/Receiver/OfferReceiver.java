@@ -111,12 +111,12 @@ public class OfferReceiver extends ParsePushBroadcastReceiver {
                         PendingIntent.FLAG_CANCEL_CURRENT
                 );
 
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+        NotificationCompat.BigTextStyle inboxStyle = new NotificationCompat.BigTextStyle();
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
         Notification notification = mBuilder.setSmallIcon(icon).setTicker(title).setWhen(0)
                 .setAutoCancel(true)
                 .setContentTitle(title)
-                .setStyle(inboxStyle)
+                .setStyle(inboxStyle.bigText(message))
                 .setContentIntent(resultPendingIntent)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), icon))

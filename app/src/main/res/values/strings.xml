@@ -91,9 +91,9 @@
         <item>Choose Category</item>
         <item>Motel</item>
         <item>Sex Shop</item>
-        <item>Massage Center</item>
+        <!--<item>Massage Center</item>
         <item>Gay Bar</item>
-        <item>Swinger Bar</item>
+        <item>Swinger Bar</item>-->
     </string-array>
 
     <!-- Detail Activity -->
@@ -122,9 +122,9 @@
     <!-- Place Categories -->
     <string name="motel">Motel</string>
     <string name="sexshop">Sex Shop</string>
-    <string name="gaybar">Gay Bar</string>
+    <!--<string name="gaybar">Gay Bar</string>
     <string name="swingerbar">Swinger Bar</string>
-    <string name="massagecenter">Massage Center</string>
+    <string name="massagecenter">Massage Center</string>-->
 
     <!-- Globals -->
     <string name="loader_message">Loading...</string>
