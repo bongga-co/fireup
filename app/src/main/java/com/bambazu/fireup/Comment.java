@@ -185,6 +185,8 @@ public class Comment extends AppCompatActivity {
                             .setAction("Submit")
                             .setLabel("New Comment")
                             .build());
+
+                    updatePlaceRating();
                 } else {
                     Toast.makeText(Comment.this, getResources().getString(R.string.comment_submit_error), Toast.LENGTH_SHORT).show();
                 }
@@ -199,5 +201,30 @@ public class Comment extends AppCompatActivity {
         if(requestCode == COMMENT_REQUEST && resultCode == RESULT_OK){
             //doComment(post, rating);
         }
+    }
+
+    private void updatePlaceRating(){
+        ParseObject idPlace = ParseObject.createWithoutData("Places", objectId);
+        ParseQuery<ParseObject> innerQuery = ParseQuery.getQuery("Comments");
+        innerQuery.whereEqualTo("idPlace", idPlace);
+        innerQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    int sum = 0;
+                    float avg = 0;
+
+                    for(int i=0; i < objects.size(); i++){
+                        sum += (int)objects.get(i).getNumber("rating");
+                    }
+
+                    avg = (objects.size() != 0) ? (sum / objects.size()) : 0;
+
+                    final ParseObject places = ParseObject.createWithoutData("Places", objectId);
+                    places.put("ranking", avg);
+                    places.saveInBackground();
+                }
+            }
+        });
     }
 }

@@ -95,25 +95,6 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
                 //Rating
                 if(searchData.getInt("rating") != 0){
                     query.whereEqualTo("ranking", searchData.getInt("rating"));
-                    //Check
-                    /*ParseObject idPlace = ParseObject.createWithoutData("Places", objectId);
-                    ParseQuery<ParseObject> innerQuery = ParseQuery.getQuery("Comments");
-                    innerQuery.whereEqualTo("idPlace", idPlace);
-                    innerQuery.findInBackground(new FindCallback<ParseObject>() {
-                        @Override
-                        public void done(List<ParseObject> objects, ParseException e) {
-                            if (e == null) {
-                                int sum = 0;
-                                float avg = 0;
-
-                                for(int i=0; i < objects.size(); i++){
-                                    sum += (int)objects.get(i).getNumber("rating");
-                                }
-
-                                avg = (objects.size() != 0) ? (sum / objects.size()) : 0;
-                            }
-                        }
-                    });*/
                 }
 
                 //Distance
