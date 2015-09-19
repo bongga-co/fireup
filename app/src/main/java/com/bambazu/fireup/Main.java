@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -25,6 +27,7 @@ import com.bambazu.fireup.Config.Config;
 import com.bambazu.fireup.Helper.DataManager;
 import com.bambazu.fireup.Helper.LocalDataManager;
 import com.bambazu.fireup.Helper.NetworkManager;
+import com.bambazu.fireup.Helper.ShakeDetector;
 import com.bambazu.fireup.Interfaz.DataListener;
 import com.bambazu.fireup.Model.Place;
 import com.google.android.gms.analytics.HitBuilders;
@@ -72,6 +75,10 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
     private ProgressDialog loader = null;
     private FloatingActionButton btnMap;
 
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +115,23 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
             Toast.makeText(this, getResources().getString(R.string.device_not_supported), Toast.LENGTH_SHORT).show();
             finish();
         }
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+            @Override
+            public void onShake(int count) {
+                if(googleApiClient.isConnected()){
+                    listPlaces.setAdapter(null);
+                    getPlaces("List", null);
+                }
+                else{
+                    googleApiClient.connect();
+                }
+            }
+        });
     }
 
     @Override
@@ -122,6 +146,8 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
     @Override
     public void onResume() {
         super.onResume();
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+
         if(googleApiClient.isConnected()){
             startLocationUpdates();
         }
@@ -129,6 +155,7 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
 
     @Override
     protected void onPause() {
+        mSensorManager.unregisterListener(mShakeDetector);
         super.onPause();
         hideLoader();
         if(googleApiClient.isConnected()){
