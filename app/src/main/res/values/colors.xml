@@ -73,4 +73,6 @@
 
     <color name="description_dialog_text">#333333</color>
     <color name="service_name">#333333</color>
+
+    <color name="generic_light_color">#A9A9A9</color>
 </resources>

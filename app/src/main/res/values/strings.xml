@@ -24,6 +24,8 @@
     <string name="btn_skip">Skip</string>
     <string name="error_login_facebook">Unable to get the user information</string>
     <string name="error_msg_login">Failed to log in, try again later</string>
+    <string name="txt_omit">Skip</string>
+    <string name="btn_terms">See Terms</string>
 
     <!-- Main Activity -->
     <string name="action_places_map">Map</string>
@@ -175,4 +177,9 @@
     <string name="offer_qr_code">Offer Code - </string>
     <string name="offer_qr_place">Place - </string>
     <string name="offer_qr_discount">Discount - </string>
+    <string name="title_activity_terms">Terms</string>
+
+    <!-- Terms -->
+    <string name="title_terms">Terms &amp; Conditions</string>
+    <string name="error_terms">Unable to get the terms and conditions, please try later</string>
 </resources>

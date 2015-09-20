@@ -24,6 +24,8 @@
     <string name="btn_skip">Omitir</string>
     <string name="error_login_facebook">No se pudo obtener la informaci\u00f3n del usuario</string>
     <string name="error_msg_login">No se pudo iniciar la sesi\u00f3n del usuario, intente m\u00e1s tarde</string>
+    <string name="txt_omit">Omitir</string>
+    <string name="btn_terms">Ver T\u00e9rminos &amp; Condiciones</string>
 
     <!-- Main Activity -->
     <string name="action_places_map">Mapa</string>
@@ -175,5 +177,9 @@
     <string name="offer_qr_code">C\u00f3digo de Promoci\u00f3n - </string>
     <string name="offer_qr_place">Lugar - </string>
     <string name="offer_qr_discount">Descuento - </string>
+
+    <!-- Terms -->
+    <string name="title_terms">T\u00e9rminos &amp; Condiciones</string>
+    <string name="error_terms">No se pudo cargar los t\u00e9rminos y condiciones, intente m\u00e1s tarde</string>
 
 </resources>

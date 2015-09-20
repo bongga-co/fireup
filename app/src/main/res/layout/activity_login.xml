@@ -7,6 +7,20 @@
     android:background="@drawable/bg"
     tools:context="com.bambazu.fireup.Login">
 
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_omit"
+        android:textColor="@color/generic_wrapper"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@+id/btn_skip"
+        android:layout_toStartOf="@+id/btn_skip"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"/> -->
+
     <ImageButton
         android:id="@+id/btn_skip"
         android:layout_width="wrap_content"
@@ -104,13 +118,28 @@
             android:textColor="@color/btn_search_title_color"
             android:layout_gravity="center_horizontal"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/terms"
-            android:textSize="10sp"
-            android:textColor="@color/actionbar_title_color"/>
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/terms"
+                android:textSize="10sp"
+                android:textColor="@color/actionbar_title_color"/>
+
+            <Button
+                android:id="@+id/btn_terms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_terms"
+                android:textColor="@color/color_description"
+                android:textSize="10sp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>

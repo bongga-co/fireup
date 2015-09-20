@@ -32,6 +32,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private ProgressDialog dialog;
     LocalDataManager localDataManager;
     private ParseUser currentUser;
+    private Button btnTerms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         skipButton = (ImageButton) findViewById(R.id.btn_skip);
         skipButton.setOnClickListener(this);
+
+        btnTerms = (Button) findViewById(R.id.btn_terms);
+        btnTerms.setOnClickListener(this);
     }
 
     @Override
@@ -130,6 +134,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 }
 
                 finish();
+                break;
+
+            case R.id.btn_terms:
+                startActivity(new Intent(Login.this, Terms.class));
                 break;
         }
     }
