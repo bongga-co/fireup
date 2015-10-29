@@ -173,12 +173,12 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        if(ParseUser.getCurrentUser() != null && ParseUser.getCurrentUser().isAuthenticated()){
+        /*if(ParseUser.getCurrentUser() != null && ParseUser.getCurrentUser().isAuthenticated()){
             menu.getItem(5).setTitle(R.string.action_logout);
         }
         else{
             menu.getItem(5).setTitle(R.string.btn_login_text);
-        }
+        }*/
 
         return true;
     }
@@ -206,7 +206,7 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
         else if(id == R.id.action_contact){
             contactTeam();
         }
-        else if(id == R.id.action_logout){
+        /*else if(id == R.id.action_logout){
             if(ParseUser.getCurrentUser() != null && ParseUser.getCurrentUser().isAuthenticated()){
                 onLogout();
             }
@@ -215,9 +215,12 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
                 startActivity(new Intent(Main.this, Login.class));
                 finish();
             }
-        }
+        }*/
         else if(id == R.id.action_offer){
             startActivity(new Intent(Main.this, Offers.class));
+        }
+        else if(id == R.id.action_terms){
+            startActivity(new Intent(Main.this, Terms.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -316,34 +319,31 @@ public class Main extends AppCompatActivity implements DataListener, GoogleApiCl
 
             for (int i = 0; i < data.size(); i++) {
                 ParseObject placeObject = data.get(i);
-
-                if(placeObject.getBoolean("visible")){
-                    places.add(
-                            new Place(
-                                 placeObject.getObjectId(),
-                                 placeObject.getString("name"),
-                                 placeObject.getParseFile("preview_one").getUrl(),
-                                 placeObject.getParseFile("preview_two").getUrl(),
-                                 placeObject.getParseFile("preview_three").getUrl(),
-                                 placeObject.getParseFile("preview_four").getUrl(),
-                                 placeObject.getParseFile("preview_five").getUrl(),
-                                 placeObject.getString("category"),
-                                 placeObject.getNumber("ranking"),
-                                 placeObject.getParseGeoPoint("position").getLatitude(),
-                                 placeObject.getParseGeoPoint("position").getLongitude(),
-                                 placeObject.getNumber("rooms").intValue(),
-                                 placeObject.getBoolean("visible"),
-                                 placeObject.getString("address"),
-                                 placeObject.getString("city"),
-                                 placeObject.getString("depto"),
-                                 placeObject.getString("country"),
-                                 placeObject.getString("description"),
-                                 placeObject.getNumber("lowprice"),
-                                 placeObject.getNumber("highprice"),
-                                 placeObject.getString("phone")
-                            )
-                    );
-                }
+                places.add(
+                        new Place(
+                             placeObject.getObjectId(),
+                             placeObject.getString("name"),
+                             placeObject.getParseFile("preview_one").getUrl(),
+                             placeObject.getParseFile("preview_two").getUrl(),
+                             placeObject.getParseFile("preview_three").getUrl(),
+                             placeObject.getParseFile("preview_four").getUrl(),
+                             placeObject.getParseFile("preview_five").getUrl(),
+                             placeObject.getString("category"),
+                             placeObject.getNumber("ranking"),
+                             placeObject.getParseGeoPoint("position").getLatitude(),
+                             placeObject.getParseGeoPoint("position").getLongitude(),
+                             placeObject.getNumber("rooms").intValue(),
+                             placeObject.getBoolean("visible"),
+                             placeObject.getString("address"),
+                             placeObject.getString("city"),
+                             placeObject.getString("depto"),
+                             placeObject.getString("country"),
+                             placeObject.getString("description"),
+                             placeObject.getNumber("lowprice"),
+                             placeObject.getNumber("highprice"),
+                             placeObject.getString("phone")
+                        )
+                );
             }
 
             Config.currentPlaces = places;

@@ -12,8 +12,8 @@ android {
         applicationId "com.bambazu.fireup"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 8
-        versionName "1.4.2"
+        versionCode 9
+        versionName "1.4.3"
     }
     buildTypes {
         release {

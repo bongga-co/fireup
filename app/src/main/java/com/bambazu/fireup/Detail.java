@@ -165,10 +165,10 @@ public class Detail extends AppCompatActivity implements View.OnClickListener, C
             callPlace();
             return true;
         }
-        else if (id == R.id.action_comments) {
+        /*else if (id == R.id.action_comments) {
             openComments();
             return true;
-        }
+        }*/
         else if(id == android.R.id.home){
             NavUtils.navigateUpFromSameTask(this);
         }

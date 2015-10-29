@@ -20,7 +20,7 @@ public class Splash extends AppCompatActivity {
 
             @Override
             public void run() {
-                startActivity(new Intent(Splash.this, Login.class));
+                startActivity(new Intent(Splash.this, Main.class));
                 finish();
             }
         }, SPLASH_TIMER);

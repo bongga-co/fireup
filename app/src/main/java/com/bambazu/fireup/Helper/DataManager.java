@@ -55,6 +55,7 @@ public class DataManager extends AsyncTask<HashMap, Void, List<ParseObject>> {
         queryType = (String) data[0].get("queryType");
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery(objectType);
+        query.whereEqualTo("visible", true);
 
         if(queryType.equals("List")){
             query.whereWithinKilometers("position", new ParseGeoPoint(Config.currentLatitude, Config.currentLongitude), 5);
