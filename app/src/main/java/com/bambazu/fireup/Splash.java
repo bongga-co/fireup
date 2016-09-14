@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 
 public class Splash extends AppCompatActivity {
     private static int SPLASH_TIMER = 3000;
-    private MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,19 +19,9 @@ public class Splash extends AppCompatActivity {
 
             @Override
             public void run() {
-                startActivity(new Intent(Splash.this, Main.class));
+                startActivity(new Intent(Splash.this, Login.class));
                 finish();
             }
         }, SPLASH_TIMER);
-
-        playSound();
-    }
-
-    private void playSound(){
-        mMediaPlayer = new MediaPlayer();
-        mMediaPlayer = MediaPlayer.create(this, R.raw.fireup);
-        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mMediaPlayer.setLooping(false);
-        mMediaPlayer.start();
     }
 }
